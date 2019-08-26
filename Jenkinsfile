@@ -4,35 +4,34 @@ pipeline {
     stages {
         stage('Download code from GitHub') {
             steps {
-                sh "echo 'stage 1'"
             }
         }
-        stage('Test Ansible Playbook') {
+        stage('Pre-change validation') {
+            steps {
+                sh "echo 'Checking if the policy is already in place. If it is, exit successfully.'"
+                echo "Pre-change validation result: ${currentBuild.result}"
+                echo "Pre-change validation currentResult: ${currentBuild.currentResult}"
+            }
+        }
+        stage('Pre-change validation') {
+            steps {
+                sh "echo 'Placeholder for Pre-change validation'"
+            }
+        }
+        stage('Apply network change') {
             steps {
                 sh "ansible-playbook ansible-test.yml -vvvv"
             }
         }
-        stage('Stage 3') {
+        stage('Post-change validation') {
             steps {
-                sh "echo 'stage 3'"
-            }
-        }
-        stage('Stage 4') {
-            steps {
-                echo 'Starting stage 4...'
                 script {
                     try {
-                        sh "echo 'stage 4: testing...'"
+                        sh "echo 'Placeholder for Post-change validation'"
                     } catch (error) {
-                        sh "echo 'stage 4: Error. Rolling back...'"
                         error("Changes failed testing.  Rolled back.")
                     }
                 }
-            }
-        }
-        stage('Stage 5') {
-            steps {
-                sh "echo 'stage 5...'"
             }
         }
     }
