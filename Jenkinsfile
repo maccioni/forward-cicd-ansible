@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-                sh "echo 'stage 1'"
+                sh "ansible-playbook eve-ng.yml"
             }
         }
         stage('Stage 2') {
@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Stsage 5') {
+        stage('Stage 5') {
             steps {
                 sh "echo 'stage 5...'"
             }
