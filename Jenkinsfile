@@ -10,18 +10,22 @@ pipeline {
         stage('Pre-change validation') {
             steps {
                 sh "echo 'Checking if the policy is already in place. If it is, exit successfully.'"
-                echo "Pre-change validation result: ${currentBuild.result}"
-                echo "Pre-change validation currentResult: ${currentBuild.currentResult}"
+                echo "currentBuild.result: ${currentBuild.result}"
+                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Simulate change in Sandbox') {
             steps {
                 sh "echo 'Placeholder for policy simulation on Forward Sandbox'"
+                echo "currentBuild.result: ${currentBuild.result}"
+                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Apply network change') {
             steps {
                 sh "ansible-playbook ansible-test.yml -vvvv"
+                echo "currentBuild.result: ${currentBuild.result}"
+                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Post-change validation') {
@@ -29,8 +33,12 @@ pipeline {
                 script {
                     try {
                         sh "echo 'Placeholder for Post-change validation'"
+                        echo "currentBuild.result: ${currentBuild.result}"
+                        echo "currentBuild.currentResult: ${currentBuild.currentResult}"
                     } catch (error) {
                         error("Changes failed testing.  Rolled back.")
+                        echo "currentBuild.result: ${currentBuild.result}"
+                        echo "currentBuild.currentResult: ${currentBuild.currentResult}"
                     }
                 }
             }
