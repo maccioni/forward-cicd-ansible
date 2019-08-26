@@ -3,19 +3,16 @@ pipeline {
 
     stages {
         stage('Stage 1') {
-            echo 'Starting stage 1...'
             steps {
                 sh "echo 'stage 1'"
             }
         }
         stage('Stage 2') {
-            echo 'Starting stage 1...'
             steps {
                 sh "echo 'stage 2'"
             }
         }
         stage('Stage 3') {
-            echo 'Starting stage 3...'
             steps {
                 sh "echo 'stage 3'"
             }
@@ -33,9 +30,9 @@ pipeline {
                 }
             }
         }
-        stage('Copy run-start') {
+        stage('Stsage 5') {
             steps {
-                sh "/opt/puppetlabs/bin/puppet-task run yang_ietf::saveconfig target='cat9k-puppet' --nodes 'cisco-pe-demo.localhost'"
+                sh "echo 'stage 5...'"
             }
         }
     }
