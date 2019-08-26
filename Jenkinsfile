@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Stage 1') {
             steps {
-                sh "ansible-playbook eve-ng.yml"
+                sh "ansible-playbook ansible-test.yml"
             }
         }
         stage('Stage 2') {
