@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Stage 1') {
+        stage('Download code from GitHub') {
             steps {
-                sh "ansible-playbook ansible-test.yml"
+                sh "echo 'stage 1'"
             }
         }
-        stage('Stage 2') {
+        stage('Test Ansible Playbook') {
             steps {
-                sh "echo 'stage 2'"
+                sh "ansible-playbook ansible-test.yml -vvvv"
             }
         }
         stage('Stage 3') {
