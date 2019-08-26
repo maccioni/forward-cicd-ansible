@@ -10,8 +10,8 @@ pipeline {
         stage('Pre-change validation') {
             steps {
                 sh "echo 'Checking if the policy is already in place. If it is, exit successfully.'"
-                echo "currentBuild.result: ${currentBuild.result}"
-                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
+                echo "Result: ${currentBuild.result}"
+                echo "CurrentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Simulate change in Sandbox') {
