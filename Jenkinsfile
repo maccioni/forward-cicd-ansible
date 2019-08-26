@@ -13,9 +13,9 @@ pipeline {
                 echo "Pre-change validation currentResult: ${currentBuild.currentResult}"
             }
         }
-        stage('Pre-change validation') {
+        stage('Simulate change in Sandbox') {
             steps {
-                sh "echo 'Placeholder for Pre-change validation'"
+                sh "echo 'Placeholder for policy simulation on Forward Sandbox'"
             }
         }
         stage('Apply network change') {
