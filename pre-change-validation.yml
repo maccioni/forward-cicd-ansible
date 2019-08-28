@@ -18,21 +18,21 @@
         password: "{{ password }}"
         body_format: json
         return_content: yes
-      register: path_output
+      register: paths_output
 
     - name: Print Paths info
       debug:
         msg:
-          - "Status: {{ networks_output.status }}"
-          - "URL: {{ networks_output.url }}"
-#          - "Security Outcome: {{ networks_output.json.info.paths.securityOutcome }}"
+          - "Status: {{ paths_output.status }}"
+          - "URL: {{ paths_output.url }}"
+#          - "Security Outcome: {{ paths_output.json.info.paths.securityOutcome }}"
 
     - name: Save all output to file
       copy:
-        content: "{{ path_output }}"
-        dest: "path.output"
+        content: "{{ paths_output }}"
+        dest: "paths.output"
 
     - name: Save json output to file
       copy:
-        content: "{{ path_output.json }}"
-        dest: "path.json"
+        content: "{{ paths_output.json }}"
+        dest: "paths.json"
