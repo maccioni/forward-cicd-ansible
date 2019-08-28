@@ -3,7 +3,7 @@
   hosts: localhost
 
   vars_files:
-    - forward.roperties
+    - forward.properties
 
   vars:
     expected_check_status: PASS  # Default status for the test (after change)
