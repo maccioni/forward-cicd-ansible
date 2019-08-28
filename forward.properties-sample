@@ -1,0 +1,17 @@
+---
+# Properties sample
+base_url: app.forwardnetworks.com/api
+#base_url: 10.10.20.128/api
+username: fabrizio
+password: fabrizio
+network_id: 55326
+snapshotId: 238889
+
+# Properties for Path API
+srcIp: 10.10.20.25
+dstIp: 10.10.20.13
+ipProto: 6
+srcPort: 80
+dstPort: 25
+# intent can be SINGLE_BEST (default), PREFER_VIOLATIONS, PREFER_DELIVERED, VIOLATIONS_ONLY
+intent: SINGLE_BEST
