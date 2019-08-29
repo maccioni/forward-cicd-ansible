@@ -6,7 +6,9 @@
     - /var/lib/jenkins/forward.properties
 
   vars:
-    expected_check_status: PASS  # Default status for the test (after change)
+    # Define the default expected security and forwarding outcome status
+    expected_security_outcome_status: DENIED      # options: PERMITTED, DENIED
+    expected_forwarding_outcome_status: DELIVERED # options: DELIVERED, DELIVERED_TO_INCORRECT_LOCATION, BLACKHOLE, DROPPED, INADMISSIBLE, UNREACHABLE, LOOP
 
   tasks:
     - name: get best path using the Forward Paths REST API
@@ -19,6 +21,7 @@
         body_format: json
         return_content: yes
       register: paths_output
+      failed_when: paths_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Paths info
       debug:
@@ -37,3 +40,7 @@
       copy:
         content: "{{ paths_output.json }}"
         dest: "paths.json"
+
+    - name: Check Security Outcome
+      command: python pre-change-validation.py
+      when: paths_output.json.info.paths[0].securityOutcome == "DENIED"

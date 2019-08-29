@@ -10,13 +10,11 @@ pipeline {
         stage('Pre-change validation') {
             steps {
                 sh "echo 'Checking if the policy is already in place. If it is, exit successfully.'"
-//                sh "ansible-playbook /var/lib/jenkins/fwd-ansible/test_esx_traffic.yml --extra-vars=@/var/lib/jenkins/fwd-ansible/deployments/test-snapshots-before.yml --extra-vars=expected_check_status=FAIL"
                 sh "ansible-playbook pre-change-validation.yml"
-                sh "python pre-change-validation.py"
+//                sh "python pre-change-validation.py"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
-        return
         stage('Simulate change in Sandbox') {
             steps {
                 sh "echo 'Placeholder for policy simulation on Forward Sandbox'"
