@@ -27,13 +27,12 @@ elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "DELIVE
     print("The security policy is already configured. No changes needed")
 
 elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "DENIED":
-    print("The forwarding is OK but the security rules need to be changed ")
-    print("on these devices: ")
+    print("The forwarding is OK but the security rules need to be changed on these devices: ")
     for hop in best_path['hops']:
         for behavior in hop['behaviors']:
             if behavior == "ACL_DENY":
                 print(hop['deviceName'])
-                
+
 else:
     print("something went wrong!!")
     print("Path Security Outcome: "   + path_security_outcome)

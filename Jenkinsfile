@@ -14,6 +14,7 @@ pipeline {
                 sh "ansible-playbook pre-change-validation.yml"
                 sh "python pre-change-validation.py"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
+                return
             }
         }
         stage('Simulate change in Sandbox') {
