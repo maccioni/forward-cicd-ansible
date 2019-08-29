@@ -11,7 +11,7 @@ pipeline {
             steps {
                 sh "echo 'Checking if the policy is already in place. If it is, exit successfully.'"
                 sh "ansible-playbook pre-change-validation.yml"
-//                sh "python pre-change-validation.py"
+                sh "python pre-change-validation.py"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
