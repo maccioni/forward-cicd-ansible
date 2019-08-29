@@ -12,6 +12,7 @@ pipeline {
                 sh "echo 'Checking if the policy is already in place. If it is, exit successfully.'"
 //                sh "ansible-playbook /var/lib/jenkins/fwd-ansible/test_esx_traffic.yml --extra-vars=@/var/lib/jenkins/fwd-ansible/deployments/test-snapshots-before.yml --extra-vars=expected_check_status=FAIL"
                 sh "ansible-playbook pre-change-validation.yml"
+                sh "python pre-change-validation.py"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
