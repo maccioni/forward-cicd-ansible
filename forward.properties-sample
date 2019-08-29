@@ -8,10 +8,14 @@ network_id: 55326
 snapshotId: 238889
 
 # Properties for Path API
+## required
 srcIp: 10.10.20.25
 dstIp: 10.10.20.13
+## optional
 ipProto: 6
 srcPort: 80
 dstPort: 25
 # intent can be SINGLE_BEST (default), PREFER_VIOLATIONS, PREFER_DELIVERED, VIOLATIONS_ONLY
 intent: SINGLE_BEST
+optional_params : &intent={{intent}}&ipProto={{ipProto}}&srcPort={{srcPort}}&dstPort={{dstPort}}
+default_params: &includeNetworkFunctions=false&maxResults=1&maxReturnPathResults=0&maxSeconds=30

@@ -1,6 +1,10 @@
 # Byte-compiled / optimized / DLL files
 
 forward.properties
+test.yml
+paths.json
+paths.output
+*.retry
 
 __pycache__/
 *.py[cod]

@@ -11,7 +11,8 @@
   tasks:
     - name: get best path using the Forward Paths REST API
       uri:
-        url: https://{{base_url}}/snapshots/{{snapshotId}}/paths?srcIp={{srcIp}}&dstIp={{dstIp}}&intent={{intent}}&ipProto={{ipProto}}&srcPort={{srcPort}}&dstPort={{dstPort}}&includeNetworkFunctions=false&maxResults=1&maxReturnPathResults=0&maxSeconds=30
+#        url: https://{{base_url}}/snapshots/{{snapshotId}}/paths?srcIp={{srcIp}}&dstIp={{dstIp}}&intent={{intent}}&ipProto={{ipProto}}&srcPort={{srcPort}}&dstPort={{dstPort}}&includeNetworkFunctions=false&maxResults=1&maxReturnPathResults=0&maxSeconds=30
+        url: https://{{base_url}}/snapshots/{{snapshotId}}/paths?srcIp={{srcIp}}&dstIp={{dstIp}}&dstPort={{dstPort}}
         method: GET
         force_basic_auth: yes
         user: "{{ username }}"
