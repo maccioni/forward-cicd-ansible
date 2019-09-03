@@ -21,8 +21,7 @@ for check in checks_json:
         if status == "PASS":
             status = "FAIL"
             print("These Checks failed:")
-            print(check['id'])
-#        print(check['name'])
+        print(check['id'])
 
 if status == "PASS":
     print("All the Forward Check are OK!")
