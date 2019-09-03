@@ -1,0 +1,39 @@
+- name: Post-change validation. Get all the Checks and save results.
+
+  hosts: localhost
+
+  vars_files:
+    - /var/lib/jenkins/forward.properties
+
+  vars:
+    # Define the default expected security and forwarding outcome status
+    expected_security_outcome_status: DENIED      # options: PERMITTED, DENIED
+    expected_forwarding_outcome_status: DELIVERED # options: DELIVERED, DELIVERED_TO_INCORRECT_LOCATION, BLACKHOLE, DROPPED, INADMISSIBLE, UNREACHABLE, LOOP
+
+  tasks:
+    - name: GET all the Forward Checks using the Forward Checks REST API
+      uri:
+        url: https://{{base_url}}/snapshots/{{snapshotId}}/checks
+        method: GET
+        force_basic_auth: yes
+        user: "{{ username }}"
+        password: "{{ password }}"
+        body_format: json
+        return_content: yes
+      register: checks_output
+
+    - name: Print API status info
+      debug:
+        msg:
+          - "API Status: {{ paths_output.status }}"
+          - "API URL: {{ paths_output.url }}"
+
+    - name: Save all output to file
+      copy:
+        content: "{{ paths_output }}"
+        dest: "checks.output"
+
+    - name: Save json output to file
+      copy:
+        content: "{{ checks_output.json }}"
+        dest: "checks.json"
