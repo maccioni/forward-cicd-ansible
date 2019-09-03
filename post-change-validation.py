@@ -26,8 +26,8 @@ for check in checks_json:
 if status == "PASS":
     print("All the Forward Check are OK!")
 elif status == "FAIL":
-    print("All the Forward Check are OK!")
-#    sys.exit(1)
+    print("Exiting from post-chsange verification with errors!")
+    sys.exit(1)
 else:
     print("Unknown status: " + status)
-    sys.exit(1)
+    sys.exit(2)
