@@ -2,8 +2,8 @@
 
 forward.properties
 test.yml
-paths.json
-paths.output
+*.json
+*.output
 *.retry
 
 __pycache__/

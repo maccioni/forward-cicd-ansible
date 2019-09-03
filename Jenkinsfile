@@ -41,7 +41,7 @@ pipeline {
                     try {
                         echo "Collect from modified devices only (TBD work with Brandon/Santhosh? on Partial Collection internal REST APIs)"
                         echo "Get all Checks using Ansible URI module and (TBD enhance forward_check module to get all the Checks??)"
-                        sh "ansible-playbook post-change-validation.yml -vvvv"
+                        sh "ansible-playbook post-change-validation.yml"
                         echo "Verify all Checks"
                         sh "python post-change-validation.py"
                         echo "currentBuild.currentResult: ${currentBuild.currentResult}"
