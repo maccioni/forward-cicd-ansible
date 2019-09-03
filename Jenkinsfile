@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Download code from GitHub') {
             steps {
-                echo "Downloading code from https://github.com/maccioni/forward-cicd-ansible"
+                echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
+                sh 'env'
+                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
             }
         }
         stage('Pre-change validation') {
@@ -39,6 +41,26 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo "(Post always) currentBuild.currentResult: ${currentBuild.currentResult}"
+            echo "(Post always) currentBuild.Result: ${currentBuild.result}"
+        }
+        success {
+            echo "(Post success) Pipeline executed successfully!"
+            slackSend (message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", color: '#00FF00', username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications', color: '#00FF00')
+        }
+        unstable {
+            echo "(Post unstable) Pipeline is unstable :/"
+        }
+        failure {
+            echo "(Post failure) Pipeline Failed!!!"
+            slackSend (message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", color: '#FF0000', username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
+        }
+        changed {
+            echo "(Post failure) Something changed..."
         }
     }
 }
