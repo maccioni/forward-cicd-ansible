@@ -3,7 +3,7 @@
 import json
 import sys
 
-# Open the paths.json that contains the Path API json output
+# Open the checks.json that contains the Checks API json output
 try:
   f = open("checks.json", "r")
   if f.mode == 'r':
@@ -21,7 +21,8 @@ for check in checks_json:
         if status == "PASS":
             status = "FAIL"
             print("These Checks failed:")
-        print(check['name'])
+            print(check['id'])
+#        print(check['name'])
 
 if status == "PASS":
     print("All the Forward Check are OK!")

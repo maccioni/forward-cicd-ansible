@@ -25,12 +25,12 @@
     - name: Print API status info
       debug:
         msg:
-          - "API Status: {{ paths_output.status }}"
-          - "API URL: {{ paths_output.url }}"
+          - "API Status: {{ checks_output.status }}"
+          - "API URL: {{ checks_output.url }}"
 
     - name: Save all output to file
       copy:
-        content: "{{ paths_output }}"
+        content: "{{ checks_output }}"
         dest: "checks.output"
 
     - name: Save json output to file
