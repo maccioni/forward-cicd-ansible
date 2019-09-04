@@ -1,6 +1,7 @@
 - name: Post-change validation. Get all the Checks and save results.
 
   hosts: localhost
+  gather_facts: no
 
   vars_files:
     - /var/lib/jenkins/forward.properties

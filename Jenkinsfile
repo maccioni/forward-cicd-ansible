@@ -30,26 +30,20 @@ pipeline {
         }
         stage('Apply network change') {
             steps {
-                echo "Push changes to production using Ansible playbook"
+                echo "Push changes to production using Ansible playbook (TBD replace ios playbbok with panos)"
                 sh "ansible-playbook ansible-test.yml -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Post-change validation') {
             steps {
-                script {
-                    try {
-                        echo "Collect from modified devices only (TBD work with Brandon/Santhosh? on Partial Collection internal REST APIs)"
-                        echo "Get all Checks using Ansible URI module and (TBD enhance forward_check module to get all the Checks??)"
-                        sh "ansible-playbook post-change-validation.yml"
-                        echo "Verify all Checks"
-                        sh "python post-change-validation.py"
-                        echo "currentBuild.currentResult: ${currentBuild.currentResult}"
-                    } catch (error) {
-                        error("Some Checks are failing.  Rolling back configuration.")
-                        echo "currentBuild.currentResult: ${currentBuild.currentResult}"
-                    }
-                }
+                echo "Collect from modified devices only (TBD work with Brandon/Santhosh? on Partial Collection internal REST APIs)"
+                echo "Get all Checks using Ansible URI module and (TBD enhance forward_check module to get all the Checks??)"
+                sh "ansible-playbook post-change-validation.yml"
+                echo "Verify all Checks"
+                sh "python post-change-validation.py"
+                echo("Some Checks are failing.  Rolling back configuration. (TBD implement rollback)")
+                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
     }

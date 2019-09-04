@@ -1,6 +1,7 @@
 - name: Pre-change validation. Check if the path is already present
 
   hosts: localhost
+  gather_facts: no
 
   vars_files:
     - /var/lib/jenkins/forward.properties
