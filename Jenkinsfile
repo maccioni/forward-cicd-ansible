@@ -21,7 +21,7 @@ pipeline {
         stage('Verify change in Sandbox') {
             steps {
                 echo "Creating a new IntentCheck for the given Path"
-                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvv"
+                sh "ansible-playbook fwd-ansible/test_esx_traffic.yml --extra-vars=@fwd-ansible/deployments/test-snapshots-after.yml --extra-vars=expected_check_status=PASS"
                 echo "Changing security policy in the Forward Sandbox (TBD work with Nikhil on Sandbox internal REST APIs)"
                 echo "Saving changes in Sandbox"
                 echo "Analyze changes"
