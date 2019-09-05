@@ -1,11 +1,13 @@
-- name: Add an Intent Check to ensure the new service is OK
+- name: Add an Intent Check to verify that the new service is OK
 
   hosts: localhost
-  vars:
-    expected_check_status: PASS
+  gather_facts: no
 
   vars_files:
     - /var/lib/jenkins/forward.properties
+
+#  vars:
+#    expected_check_status: PASS
 
     - name: Ensure a check matching new service intent is present
       forward_check:
