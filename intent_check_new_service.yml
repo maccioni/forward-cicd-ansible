@@ -15,10 +15,10 @@
         name: "Check added by Jenkins CI/CD Pipeline"
         type: "typical_5_tuple"
         data:
-          source: "{{ srcIp }}"
-          ipv4_dst: "{{ dstIp }}"
-          ip_proto: {{ ipProto }}
-          tp_src: {{ srcPort }}
-          tp_dst: {{ dstPort }}
+          source: "10.6.142.197"
+          ipv4_dst: "10.5.0.130"
+          ip_proto: 6
+          tp_src: 80
+          tp_dst: 25
       register: check_output
 #      failed_when: check_output.result.status != expected_check_status
