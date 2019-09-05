@@ -1,0 +1,22 @@
+- name: Add an Intent Check to ensure the new service is OK
+
+  hosts: localhost
+  vars:
+    expected_check_status: PASS
+
+  vars_files:
+    - /var/lib/jenkins/forward.properties
+
+    - name: Ensure a check matching new service intent is present
+      forward_check:
+        state: Present
+        name: "Check added by Jenkins CI/CD Pipeline"
+        type: "typical_5_tuple"
+        data:
+          source: "{{ srcIp }}"
+          ipv4_dst: "{{ dstIp }}"
+          ip_proto: "{{ ipProto }}"
+          tp_src: "{{ srcPort }}"
+          tp_dst: "{{ dstPort }}"
+      register: check_output
+#      failed_when: check_output.result.status != expected_check_status
