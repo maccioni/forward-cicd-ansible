@@ -9,7 +9,7 @@ pipeline {
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
             }
         }
-        stage('Pre-change validation') {
+        stage('Check if change is needed') {
             steps {
                 echo "Getting Path info using Ansible URI module (TBD build a forward_path module)"
                 sh "ansible-playbook pre-change-validation.yml"
@@ -18,7 +18,7 @@ pipeline {
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
-        stage('Simulate change in Sandbox') {
+        stage('Verify change in Sandbox') {
             steps {
                 echo "Creating a new IntentCheck for the given Path"
                 echo "Changing security policy in the Forward Sandbox (TBD work with Nikhil on Sandbox internal REST APIs)"
@@ -28,14 +28,14 @@ pipeline {
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
-        stage('Apply network change') {
+        stage('Apply network change to production') {
             steps {
                 echo "Push changes to production using Ansible playbook (TBD replace ios playbbok with panos)"
                 sh "ansible-playbook ansible-test.yml -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
-        stage('Post-change validation') {
+        stage('Verify new connectivity and check for regressions') {
             steps {
                 echo "Collect from modified devices only (TBD work with Brandon/Santhosh? on Partial Collection internal REST APIs)"
                 echo "Get all Checks using Ansible URI module and (TBD enhance forward_check module to get all the Checks??)"
