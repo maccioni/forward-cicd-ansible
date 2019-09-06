@@ -12,6 +12,7 @@
   tasks:
     - name: Ensure a check matching new service intent is present
       forward_check:
+        url: https://{{base_url}}
         state: Present
         name: "Check added by Jenkins CI/CD Pipeline"
         type: "typical_5_tuple"
