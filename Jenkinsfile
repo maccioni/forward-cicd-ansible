@@ -33,6 +33,8 @@ pipeline {
             steps {
                 echo "Push changes to production using Ansible playbook (TBD replace ios playbbok with panos)"
                 sh "ansible-playbook ansible-test.yml -vvvv"
+                sh "ansible-playbook fwd-ansible/test_esx_traffic.yml --extra-vars=@fwd-ansible/deployments/test-snapshots-after.yml --extra-vars=expected_check_status=PASS -vvvv"
+                sh "ansible-playbook security-policy-change -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }

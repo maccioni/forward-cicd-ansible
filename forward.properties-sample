@@ -2,8 +2,8 @@
 # Properties sample
 base_url: app.forwardnetworks.com/api
 #base_url: 10.10.20.128/api
-username: fabrizio
-password: fabrizio
+username: admin
+password: admin
 network_id: 55326
 snapshotId: 238889
 
@@ -19,3 +19,6 @@ dstPort: 25
 intent: SINGLE_BEST
 optional_params : &intent={{intent}}&ipProto={{ipProto}}&srcPort={{srcPort}}&dstPort={{dstPort}}
 default_params: &includeNetworkFunctions=false&maxResults=1&maxReturnPathResults=0&maxSeconds=30
+
+# Palo Alto Networks
+panos_password: admin

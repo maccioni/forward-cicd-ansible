@@ -1,7 +1,7 @@
 ---
 
 - name: Change Security policy on Palo Alto Networks device
-  hosts: 10.10.20.14
+  hosts: 10.10.20.27
   gather_facts: no
 
 # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
@@ -9,9 +9,11 @@
     - name: Change Security Rules
       panos_security_rule:
         rule_name: 'permit ACME service'
+        password: "{{ panos_password }}"
         description: 'Permit access to ACME server on https'
         tag_name: ['production']
         source_ip: ['2.2.2.2']
         destination_ip: ['1.1.1.1']
         application: ['https']
+        commit: yes
         action: 'allow'
