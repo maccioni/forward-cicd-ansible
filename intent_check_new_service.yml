@@ -6,8 +6,7 @@
 #  vars_files:
 #    - /var/lib/jenkins/forward.properties
 
-#  vars:
-#    expected_check_status: PASS
+  tasks:
 
     - name: Ensure a check matching new service intent is present
       forward_check:
