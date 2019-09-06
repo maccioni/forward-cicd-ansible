@@ -5,6 +5,7 @@ pipeline {
         stage('Download code from GitHub') {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
+                sh "export JENKINS_IS_CHANGE_NEEDED=TRUE"
                 sh 'env'
                 sh "cp intent_check_new_service.yml fwd-ansible"
 //                sh "cp /var/lib/jenkins/forward.properties fwd-ansible/fwd-ansible.properties"
@@ -40,7 +41,7 @@ pipeline {
             steps {
                 echo "Push changes to production using Ansible playbook)"
                 sh "ansible-playbook ansible-test.yml -vvvv"
-//                sh "ansible-playbook security-policy-change.yml -vvvv"
+                sh "ansible-playbook security-policy-change.yml -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
