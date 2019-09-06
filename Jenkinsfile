@@ -14,7 +14,7 @@ pipeline {
         stage('Check if change is needed') {
             steps {
                 echo "Getting Path info using Ansible URI module (TBD build a forward_path module)"
-                sh "ansible-playbook is_change_needed.yml -vvvv"
+                sh "ansible-playbook is_change_needed.yml"
                 echo "Checking if routing and policies are already in place for the given path"
                 sh "python is_change_needed.py"
                 sh 'env'
@@ -28,7 +28,7 @@ pipeline {
 //            }
             steps {
                 echo "Creating a new IntentCheck for the given Path"
-                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvv"
+                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
                 echo "Changing security policy in the Forward Sandbox (TBD work with Nikhil on Sandbox internal REST APIs)"
                 echo "Saving changes in Sandbox"
                 echo "Analyze changes"
