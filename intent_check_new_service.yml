@@ -3,14 +3,13 @@
   hosts: localhost
   gather_facts: no
 
-  vars:
-  expected_check_status: PASS  # Default status
+  vars_files:
+    - /var/lib/jenkins/forward.properties
 
-#  vars_files:
-#    - /var/lib/jenkins/forward.properties
+  vars:
+    expected_check_status: PASS  # Default status
 
   tasks:
-
     - name: Ensure a check matching new service intent is present
       forward_check:
         state: Present
