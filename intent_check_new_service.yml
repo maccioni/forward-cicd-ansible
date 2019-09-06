@@ -25,7 +25,7 @@
       register: check_output
 #      failed_when: check_output.result.status != expected_check_status
 
-    - name: Print Check info
-      debug:
-        msg:
-          - "Dump all output: : {{ check_output }}"
+#    - name: Print Check info
+#      debug:
+#        msg:
+#          - "Dump all output: : {{ check_output }}"
