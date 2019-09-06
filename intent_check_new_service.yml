@@ -3,6 +3,9 @@
   hosts: localhost
   gather_facts: no
 
+  vars:
+  expected_check_status: PASS  # Default status
+
 #  vars_files:
 #    - /var/lib/jenkins/forward.properties
 
@@ -14,10 +17,10 @@
         name: "Check added by Jenkins CI/CD Pipeline"
         type: "typical_5_tuple"
         data:
-          source: "10.6.142.197"
-          ipv4_dst: "10.5.0.130"
+          source: "ESXi-2_vSwitch23"
+          ipv4_dst: "10.110.57.34"
           ip_proto: tcp
           tp_src: http
           tp_dst: https
       register: check_output
-#      failed_when: check_output.result.status != expected_check_status
+      failed_when: check_output.result.status != expected_check_status
