@@ -42,6 +42,6 @@
         content: "{{ paths_output.json }}"
         dest: "paths.json"
 
-    - name: Check Security Outcome
-      command: python pre-change-validation.py
-      when: paths_output.json.info.paths[0].securityOutcome == "DENIED"
+#    - name: Check Security Outcome
+#      command: python pre-change-validation.py
+#      when: paths_output.json.info.paths[0].securityOutcome == "DENIED"

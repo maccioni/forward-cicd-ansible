@@ -7,21 +7,31 @@ pipeline {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
                 sh 'env'
                 sh "cp intent_check_new_service.yml fwd-ansible"
-                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
+                sh "cp /var/lib/jenkins/forward.properties fwd-ansible/fwd-ansible.properties"
+                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
             }
         }
         stage('Check if change is needed') {
+            when {
+                // Proceed only if Only say hello if a "greeting" is requested
+                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
+            }
             steps {
                 echo "Getting Path info using Ansible URI module (TBD build a forward_path module)"
-                sh "ansible-playbook pre-change-validation.yml -vvvv"
+                sh "ansible-playbook is_change_needed.yml -vvvv"
                 echo "Checking if routing and policies are already in place for the given path"
-                sh "python pre-change-validation.py"
+                sh "python is_change_needed.py"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Verify change in Sandbox') {
+            when {
+                // Proceed only if Only say hello if a "greeting" is requested
+                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
+            }
             steps {
                 echo "Creating a new IntentCheck for the given Path"
+                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvv"
                 echo "Changing security policy in the Forward Sandbox (TBD work with Nikhil on Sandbox internal REST APIs)"
                 echo "Saving changes in Sandbox"
                 echo "Analyze changes"
@@ -30,21 +40,34 @@ pipeline {
             }
         }
         stage('Apply network change to production') {
+            when {
+                // Proceed only if Only say hello if a "greeting" is requested
+                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
+            }
             steps {
-                echo "Push changes to production using Ansible playbook (TBD replace ios playbbok with panos)"
-                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvv"
+                echo "Push changes to production using Ansible playbook)"
                 sh "ansible-playbook security-policy-change.yml -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Verify new connectivity and check for regressions') {
+            when {
+                // Proceed only if Only say hello if a "greeting" is requested
+                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
+            }
             steps {
-                echo "Collect from modified devices only (TBD work with Brandon/Santhosh? on Partial Collection internal REST APIs)"
-                echo "Get all Checks using Ansible URI module and (TBD enhance forward_check module to get all the Checks??)"
-                sh "ansible-playbook post-change-validation.yml"
-                echo "Verify all Checks"
-                sh "python post-change-validation.py"
-                echo("Some Checks are failing.  Rolling back configuration. (TBD implement rollback)")
+                echo "Collect from modified devices only"
+                echo "Get all Checks using Ansible URI module"
+                sh "ansible-playbook post-change-verification.yml"
+                script {
+                    try {
+                        echo "Verify all Checks"
+                        sh "python post-change-verification.py"
+                    } catch (error) {
+                        echo("Some Checks are failing.  Rolling back configuration.")
+                        sh "ansible-playbook rollback.yml -vvvv"
+                    }
+                }
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
