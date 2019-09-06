@@ -12,15 +12,12 @@ pipeline {
             }
         }
         stage('Check if change is needed') {
-            when {
-                // Proceed only if Only say hello if a "greeting" is requested
-                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
-            }
             steps {
                 echo "Getting Path info using Ansible URI module (TBD build a forward_path module)"
                 sh "ansible-playbook is_change_needed.yml -vvvv"
                 echo "Checking if routing and policies are already in place for the given path"
                 sh "python is_change_needed.py"
+                sh 'env'
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }

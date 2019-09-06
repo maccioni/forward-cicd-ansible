@@ -1,6 +1,6 @@
 ---
 
-- name: Change Security policy on Palo Alto Networks device
+- name: Rollback Security policy on Palo Alto Networks device
   hosts: 10.10.20.27
   gather_facts: no
 
