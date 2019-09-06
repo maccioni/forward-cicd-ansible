@@ -32,6 +32,7 @@ pipeline {
             steps {
                 echo "Push changes to production using Ansible playbook (TBD replace ios playbbok with panos)"
                 sh "ansible-playbook ansible-test.yml -vvvv"
+                sh "cp intent_check_new_service.yml fwd-ansible"
                 sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvv"
                 sh "ansible-playbook security-policy-change.yml -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
