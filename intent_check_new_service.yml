@@ -23,11 +23,9 @@
           tp_src: http
           tp_dst: https
       register: check_output
-#      failed_when: check_output.result.status != expected_check_status
+      failed_when: check_output.result.status != expected_check_status
 
     - name: Print Check info
       debug:
         msg:
-          - "API Status: {{ check_output.status }}"
-          - "API URL: {{ check_output.url }}"
-          - "Dump all output: : {{ check_output.status }}"
+          - "Dump all output: : {{ check_output }}"
