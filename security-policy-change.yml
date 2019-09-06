@@ -8,6 +8,9 @@
   vars_files:
     - /var/lib/jenkins/forward.properties
 
+  roles:
+    - role: PaloAltoNetworks.paloaltonetworks
+
 # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
   tasks:
     - name: Change Security Rules
