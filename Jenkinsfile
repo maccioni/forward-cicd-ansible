@@ -13,7 +13,7 @@ pipeline {
         stage('Check if change is needed') {
             steps {
                 echo "Getting Path info using Ansible URI module (TBD build a forward_path module)"
-                sh "ansible-playbook pre-change-validation.yml"
+                sh "ansible-playbook pre-change-validation.yml -vvvv"
                 echo "Checking if routing and policies are already in place for the given path"
                 sh "python pre-change-validation.py"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
