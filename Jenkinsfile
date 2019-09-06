@@ -6,6 +6,7 @@ pipeline {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
                 sh 'env'
+                sh "cp intent_check_new_service.yml fwd-ansible"
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})", username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
             }
         }
@@ -31,8 +32,6 @@ pipeline {
         stage('Apply network change to production') {
             steps {
                 echo "Push changes to production using Ansible playbook (TBD replace ios playbbok with panos)"
-                sh "ansible-playbook ansible-test.yml -vvvv"
-                sh "cp intent_check_new_service.yml fwd-ansible"
                 sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvv"
                 sh "ansible-playbook security-policy-change.yml -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
