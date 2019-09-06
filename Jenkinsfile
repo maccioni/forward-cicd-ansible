@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo "Creating a new IntentCheck for the given Path"
                 sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
-                echo "Changing security policy in the Forward Sandbox (TBD work with Nikhil on Sandbox internal REST APIs)"
+                echo "Changing security policy in the Forward Sandbox"
                 echo "Saving changes in Sandbox"
                 echo "Analyze changes"
                 echo "Verify Check status "
