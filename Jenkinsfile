@@ -22,10 +22,10 @@ pipeline {
             }
         }
         stage('Verify change in Sandbox') {
-            when {
+//            when {
                 // Proceed only if Only say hello if a "greeting" is requested
-                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
-            }
+//                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
+//            }
             steps {
                 echo "Creating a new IntentCheck for the given Path"
                 sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvv"
@@ -37,10 +37,10 @@ pipeline {
             }
         }
         stage('Apply network change to production') {
-            when {
+//            when {
                 // Proceed only if Only say hello if a "greeting" is requested
-                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
-            }
+//                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
+//            }
             steps {
                 echo "Push changes to production using Ansible playbook)"
                 sh "ansible-playbook security-policy-change.yml -vvvv"
@@ -48,10 +48,10 @@ pipeline {
             }
         }
         stage('Verify new connectivity and check for regressions') {
-            when {
+//            when {
                 // Proceed only if Only say hello if a "greeting" is requested
-                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
-            }
+//                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
+//            }
             steps {
                 echo "Collect from modified devices only"
                 echo "Get all Checks using Ansible URI module"
