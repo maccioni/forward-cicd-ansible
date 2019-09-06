@@ -13,7 +13,7 @@
       panos_security_rule:
         ip_address: '{{ panos_ip }}'
         username: '{{ panos_user }}'
-        password: '{{ panos_pswd }}'
+        password: '{{ panos_password }}'
         rule_name: 'permit ACME service'
         description: 'Permit access to ACME server on https'
         tag_name: ['ACME']
