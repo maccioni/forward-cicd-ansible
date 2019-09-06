@@ -40,7 +40,7 @@ pipeline {
             steps {
                 echo "Push changes to production using Ansible playbook)"
                 sh "ansible-playbook ansible-test.yml -vvvv"
-                sh "ansible-playbook security-policy-change.yml -vvvv"
+//                sh "ansible-playbook security-policy-change.yml -vvvv"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
