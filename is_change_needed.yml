@@ -22,7 +22,7 @@
         body_format: json
         return_content: yes
       register: paths_output
-      failed_when: paths_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
+#      failed_when: paths_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Paths info
       debug:
