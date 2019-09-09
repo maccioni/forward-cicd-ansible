@@ -9,7 +9,7 @@
     - /var/lib/jenkins/forward.properties
 
   roles:
-    - role: PaloAltoNetworks.paloaltonetworks
+    - role: paloaltonetworks.paloaltonetworks
 
 # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
   tasks:
@@ -20,10 +20,8 @@
         password: '{{ panos_password }}'
         rule_name: 'permit ACME service'
         description: 'Permit access to ACME server on https'
-        tag_name: ['ACME']
-        source_ip: '{{ panosSrcIp }}'
         destination_ip: '{{ panosDstIp }}'
         category: ['any']
-        application: ['https']
+        application: ['any']
         action: 'allow'
         commit: yes

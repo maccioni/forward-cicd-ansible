@@ -1,11 +1,15 @@
 ---
 
 - name: Rollback Security policy on Palo Alto Networks device
-  hosts: 10.10.20.27
+  hosts: eve_panos
+  connection: local
   gather_facts: no
 
   vars_files:
     - /var/lib/jenkins/forward.properties
+
+  roles:
+    - role: paloaltonetworks.paloaltonetworks
 
 # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
   tasks:
@@ -16,11 +20,9 @@
         password: '{{ panos_password }}'
         rule_name: 'permit ACME service'
         description: 'Permit access to ACME server on https'
-        tag_name: ['ACME']
-        source_ip: '{{ panosSrcIp }}'
         destination_ip: '{{ panosDstIp }}'
         category: ['any']
-        application: ['https']
+        application: ['any']
         action: 'allow'
         operation: delete
         commit: yes
