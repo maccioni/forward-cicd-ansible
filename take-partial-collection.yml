@@ -26,8 +26,19 @@
       register: collection_output
 #      failed_when: collection_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
-    - name: Print Paths info
+    - name: Print Collection info
       debug:
         msg:
           - "API Status: {{ collection_output.status }}"
           - "API URL: {{ collection_output.url }}"
+          - "Collection output: {{ collection_output }}"
+
+    - name: Save all output to file
+      copy:
+        content: "{{ collection_output }}"
+        dest: "collection.output"
+
+    - name: Save json output to file
+      copy:
+        content: "{{ collection_output.json }}"
+        dest: "collection.json"

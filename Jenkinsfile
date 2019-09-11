@@ -49,6 +49,8 @@ pipeline {
             steps {
                 echo "Collect from modified devices only"
                 sh "ansible-playbook take-partial-collection.yml -vvvv"
+                echo "Make sure collection and processing are over"
+                sh "sleep 60"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook post-change-verification.yml"
                 script {
