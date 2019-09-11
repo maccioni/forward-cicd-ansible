@@ -27,7 +27,6 @@
         msg:
           - "API Status: {{ collection_output.status }}"
           - "API URL: {{ collection_output.url }}"
-          - "Collection output: {{ collection_output }}"
 
       ###### STEP 2: wait until the collection is over ######
       #
@@ -95,5 +94,5 @@
         msg:
           - "API Status: {{ latest_processed_output.status }}"
           - "API URL: {{ latest_processed_output.url }}"
-#          - "latestProcessed id: {{ latest_processed_output.json.id }}"
-          - "latestProcessed output: {{ latest_processed_output }}"
+          - "latestProcessed id: {{ latest_processed_output.json.id }}"
+          - "Partial Collection id: {{ snapshots_output.json.snapshots[0].id }}"
