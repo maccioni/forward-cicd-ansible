@@ -29,7 +29,8 @@ pipeline {
 //            }
             steps {
                 echo "Creating a new IntentCheck for the given Path"
-                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
+//                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
+                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvvv"
                 echo "Changing security policy in the Forward Sandbox"
                 echo "Saving changes in Sandbox"
                 echo "Analyze changes"
@@ -48,6 +49,7 @@ pipeline {
         stage('Verify new connectivity and check for regressions') {
             steps {
                 echo "Collect from modified devices only"
+                sh "ansible-playbook take-partial-collection.yml -vvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook post-change-verification.yml"
                 script {
