@@ -47,10 +47,8 @@ pipeline {
         }
         stage('Verify new connectivity and check for regressions') {
             steps {
-                echo "Collect from modified devices only"
+                echo "Collect from modified devices only and make sure collection and processing are over"
                 sh "ansible-playbook take-partial-collection.yml -vvvv"
-                echo "Make sure collection and processing are over"
-                sh "sleep 60"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook post-change-verification.yml"
                 script {

@@ -86,9 +86,9 @@
         body_format: json
         return_content: yes
       register: latest_processed_output
-#      until: latest_processed_output.json.id == snapshots_output.json.snapshots[0].id
-#      retries: 5
-#      delay: 15
+      until: latest_processed_output.json.id == snapshots_output.json.snapshots[0].id
+      retries: 5
+      delay: 15
 
     - name: Print latestProcessed Status info
       debug:
