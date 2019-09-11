@@ -20,8 +20,6 @@
         user: "{{ username }}"
         password: "{{ password }}"
         body_format: json
-        body:
-          devices: ["a70*"]
         return_content: yes
       register: fork_output
 #      failed_when: collection_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
@@ -32,6 +30,7 @@
           - "API Status: {{ fork_output.status }}"
           - "API URL: {{ fork_output.url }}"
           - "Fork ID: {{ fork_output.id }}"
+          - "Fork output: {{ fork_output }}"
 
 
     - name: Save changes in Sandox
@@ -54,6 +53,8 @@
         msg:
           - "API Status: {{ save_output.status }}"
           - "API URL: {{ save_output.url }}"
+          - "Save output: {{ save_output }}"
+
 
     - name: Commit changes in Sandox
       uri:
@@ -72,3 +73,4 @@
         msg:
           - "API Status: {{ commit_output.status }}"
           - "API URL: {{ commit_output.url }}"
+          - "Commit output: {{ commit_output }}"
