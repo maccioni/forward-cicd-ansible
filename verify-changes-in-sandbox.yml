@@ -32,21 +32,8 @@
           - "Fork id: {{ fork_output.json.id }}"
           - "Fork output: {{ fork_output }}"
 
-vars:
-  sonar_api_url: "https://yoursonarqubeserver.com/api"
-  sonar_token: "YourSonarQubeApiTokenThatRequiresAdminRights"
-  sonar_profile: "YourSonarQubeProfileToLoad.xml"
-Task:
-
-- name: POST a SonarQube Profile xml via curl
-  shell: 'curl  -X "POST" "{{ sonar_api_url }}/qualityprofiles/restore" \
-                -H "Content-Type: multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__" \
-                -u {{ sonar_token }}: \
-                -k \
-                --form backup=@{{ sonar_profile }}'
-
       # Ansible uri modules does not support form-data body format to upload files.
-      # This task uses curl Instead
+      # This task uses curl instead
     - name: Save changes in Sandox
 #      shel: 'curl  {{ username }}:{{ password }} \
       shel: '\
