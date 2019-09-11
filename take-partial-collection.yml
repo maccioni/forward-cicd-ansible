@@ -14,7 +14,7 @@
   tasks:
     - name: Start Partial Collection
       uri:
-        url: https://{{base_url}}/networks/{{networkId}}/startcollection
+        url: https://{{base_url}}/networks/{{network_id}}/startcollection
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"
