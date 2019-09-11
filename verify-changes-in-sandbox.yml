@@ -29,7 +29,6 @@
         msg:
           - "API Status: {{ fork_output.status }}"
           - "API URL: {{ fork_output.url }}"
-          - "Fork ID: {{ fork_output.id }}"
           - "Fork output: {{ fork_output }}"
 
 
