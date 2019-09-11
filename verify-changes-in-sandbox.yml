@@ -29,21 +29,41 @@
         msg:
           - "API Status: {{ fork_output.status }}"
           - "API URL: {{ fork_output.url }}"
+          - "Fork id: {{ fork_output.json.id }}"
           - "Fork output: {{ fork_output }}"
 
+vars:
+  sonar_api_url: "https://yoursonarqubeserver.com/api"
+  sonar_token: "YourSonarQubeApiTokenThatRequiresAdminRights"
+  sonar_profile: "YourSonarQubeProfileToLoad.xml"
+Task:
 
+- name: POST a SonarQube Profile xml via curl
+  shell: 'curl  -X "POST" "{{ sonar_api_url }}/qualityprofiles/restore" \
+                -H "Content-Type: multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__" \
+                -u {{ sonar_token }}: \
+                -k \
+                --form backup=@{{ sonar_profile }}'
+
+      # Ansible uri modules does not support form-data body format to upload files.
+      # This task uses curl Instead
     - name: Save changes in Sandox
-      uri:
-        url: https://{{base_url}}/snapshots/{{fork_output.id}}/files
-        method: POST
-        force_basic_auth: yes
-        user: "{{ username }}"
-        password: "{{ password }}"
-        body_format: form-data
-        body:
-          - name: "file"
-          - filename: "/var/lib/jenkins/a7048_config.txt"
-        return_content: yes
+#      shel: 'curl  {{ username }}:{{ password }} \
+      shel: '\
+               -H 'Accept: application/json' \
+               -H 'Accept-Encoding: gzip, deflate' \
+               -H 'Authorization: Basic ZmFicml6aW9tYWNjaW9uaUBmb3J3YXJkbmV0d29ya3MuY29tOkZvcm5hc2llcjEh' \
+               -H 'Cache-Control: no-cache' \
+               -H 'Connection: keep-alive' \
+               -H 'Content-Length: 400567' \
+               -H 'Content-Type: application/json' \
+               -H 'Cookie: AWSALB=m7CVDQfXuOnsnVy9rK4/Fy6Kxez7LpTs8+ryxTcCkdFtSTBBYZ73jqZyY7ZfPKptV0lr5eZnvmRk6sQXzHiLi8BYvfy/a/Kc/rTNZCgtnAyIrUe7wHlhyfsb0nRj' \
+               -H 'Host: app.forwardnetworks.com' \
+               -H 'Postman-Token: d0540e79-0a65-4c79-8de7-40af6867bdb6,a5131c3a-86f0-43d0-bce8-a9d250ff3b2b' \
+               -H 'User-Agent: PostmanRuntime/7.16.3' \
+               -H 'cache-control: no-cache' \
+               -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+               -F 'file=@/var/lib/jenkins/{{ device_name }}_config.txt'
       register: save_output
 #      failed_when: collection_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
@@ -57,7 +77,7 @@
 
     - name: Commit changes in Sandox
       uri:
-        url: https://{{base_url}}/snapshots/{{fork_output.id}}/commit?changed
+        url: https://{{base_url}}/snapshots/{{fork_output.json.id}}/commit?changed
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"
