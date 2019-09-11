@@ -30,10 +30,9 @@ pipeline {
             steps {
                 echo "Creating a new IntentCheck for the given Path"
 //                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
-                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvvv"
-                echo "Changing security policy in the Forward Sandbox"
-                echo "Saving changes in Sandbox"
-                echo "Analyze changes"
+//                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml -vvvvv"
+                echo "Testing security policy in the Forward Sandbox"
+//                sh "ansible-playbook fwd-ansible/verify-changes-in-sandbox.yml -vvvvv"
                 echo "Verify Check status "
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }

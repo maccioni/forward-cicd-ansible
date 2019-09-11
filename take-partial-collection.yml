@@ -23,27 +23,11 @@
         body:
           devices: ["a70*"]
         return_content: yes
-      register: paths_output
-#      failed_when: paths_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
+      register: collection_output
+#      failed_when: collection_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Paths info
       debug:
         msg:
-          - "API Status: {{ paths_output.status }}"
-          - "API URL: {{ paths_output.url }}"
-          - "Paths Security Outcome: {{ paths_output.json.info.paths[0].securityOutcome }}"
-          - "Paths forwarding Outcome: {{ paths_output.json.info.paths[0].forwardingOutcome }}"
-
-    - name: Save all output to file
-      copy:
-        content: "{{ paths_output }}"
-        dest: "paths.output"
-
-    - name: Save json output to file
-      copy:
-        content: "{{ paths_output.json }}"
-        dest: "paths.json"
-
-#    - name: Check Security Outcome
-#      command: python pre-change-validation.py
-#      when: paths_output.json.info.paths[0].securityOutcome == "DENIED"
+          - "API Status: {{ collection_output.status }}"
+          - "API URL: {{ collection_output.url }}"
