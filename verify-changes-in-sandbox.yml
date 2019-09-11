@@ -36,7 +36,8 @@
       # This task uses curl instead
     - name: Save changes in Sandox
 #      shel: 'curl  {{ username }}:{{ password }} \
-      shel: '  -X "POST" \
+      shel: '  curl \
+               -X "POST" \
                "https://{{base_url}}/snapshots/{{fork_output.json.id}}/files" \
                -H "Accept: application/json" \
                -H "Accept-Encoding: gzip, deflate" \
