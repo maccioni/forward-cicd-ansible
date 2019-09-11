@@ -86,13 +86,14 @@
         body_format: json
         return_content: yes
       register: latest_processed_output
-      until: latest_processed_output.json.id == snapshots_output.json.snapshots[0].id
-      retries: 5
-      delay: 15
+#      until: latest_processed_output.json.id == snapshots_output.json.snapshots[0].id
+#      retries: 5
+#      delay: 15
 
-    - name: Print Collector Status info
+    - name: Print latestProcessed Status info
       debug:
         msg:
           - "API Status: {{ latest_processed_output.status }}"
           - "API URL: {{ latest_processed_output.url }}"
-          - "latestProcessed id: {{ latest_processed_output.json.id }}"
+#          - "latestProcessed id: {{ latest_processed_output.json.id }}"
+          - "latestProcessed output: {{ latest_processed_output }}"
