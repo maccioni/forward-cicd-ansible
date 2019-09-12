@@ -6,12 +6,9 @@
   vars_files:
     - /var/lib/jenkins/forward.properties
 
-  vars:
-    # Define the default expected security and forwarding outcome status
-    expected_security_outcome_status: DENIED      # options: PERMITTED, DENIED
-    expected_forwarding_outcome_status: DELIVERED # options: DELIVERED, DELIVERED_TO_INCORRECT_LOCATION, BLACKHOLE, DROPPED, INADMISSIBLE, UNREACHABLE, LOOP
-
   tasks:
+
+      #### Step 1: fork the given snapshot ####
     - name: Fork current snapshot
       uri:
         url: https://{{base_url}}/snapshots/243646/fork?snapshotName=snapshot-fork
@@ -22,7 +19,6 @@
         body_format: json
         return_content: yes
       register: fork_output
-#      failed_when: collection_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Snapshot Fork info
       debug:
@@ -30,19 +26,14 @@
           - "API Status: {{ fork_output.status }}"
           - "API URL: {{ fork_output.url }}"
           - "Fork id: {{ fork_output.json.id }}"
-          - "Fork output: {{ fork_output }}"
 
+      #### Step 2: Save changes into Sanbox by uploading the new device config ####
     - name: Save changes into Sandox
-      uri:
-        url: https://{{base_url}}/snapshots/{{fork_output.json.id}}/files
-        method: POST
-        force_basic_auth: yes
-        user: "{{ username }}"
-        password: "{{ password }}"
-        src: /var/lib/jenkins/{{ device_name }}_config.txt
-        return_content: yes
+      shell: 'curl  -X "POST" "https://{{base_url}}/snapshots/{{fork_output.json.id}}/files" \
+                  -u {{ username }}:{{ password }} \
+                  -F "file=@/var/lib/jenkins/{{ device_name }}_config.txt"
+                  -k'
       register: save_output
-#      failed_when: collection_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Save Changes info
       debug:
@@ -50,6 +41,10 @@
           - "API Status: {{ save_output.status }}"
           - "API URL: {{ save_output.url }}"
           - "Save output: {{ save_output }}"
+          - "id: {{ save_output.json.id }}"
+          - "Filename: {{ save_output.json.filename }}"
+
+
 
     - name: Commit changes in Sandox
       uri:
