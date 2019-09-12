@@ -24,12 +24,16 @@ path_security_outcome   = best_path['securityOutcome']
 path_forwarding_outcome = best_path['forwardingOutcome']
 
 # Take action based on the forwarding and security outcomes
+# Possible values:
+# forwardingOutcome: DELIVERED, DELIVERED_TO_INCORRECT_LOCATION, BLACKHOLE, DROPPED, INADMISSIBLE, UNREACHABLE, LOOP
+# securityOutcome: PERMITTED, DENIED
+
 if path_forwarding_outcome == "DENIED":
     print("The is no valid routing path between source and destination")
     print("Please contact your network administrator")
     exit(1)
 
-elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "DELIVERED":
+elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "PERMITTED":
     print("The security policy is already configured. No changes needed")
     # Set an enviroment varial to skip the remaning stages
     envCmd = 'export JENKINS_IS_CHANGE_NEEDED=FALSE'
