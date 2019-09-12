@@ -39,8 +39,8 @@
       debug:
         msg:
           - "Save output: {{ save_output }}"
-          - "id: {{ save_output.id }}"
-          - "Filename: {{ save_output.filename }}"
+#          - "id: {{ save_output.id }}"
+#          - "Filename: {{ save_output.filename }}"
 
     - name: Commit changes in Sandox
       uri:
