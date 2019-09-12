@@ -38,13 +38,9 @@
     - name: Print Save Changes info
       debug:
         msg:
-          - "API Status: {{ save_output.status }}"
-          - "API URL: {{ save_output.url }}"
           - "Save output: {{ save_output }}"
-          - "id: {{ save_output.json.id }}"
-          - "Filename: {{ save_output.json.filename }}"
-
-
+          - "id: {{ save_output.id }}"
+          - "Filename: {{ save_output.filename }}"
 
     - name: Commit changes in Sandox
       uri:
