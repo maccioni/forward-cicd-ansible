@@ -28,7 +28,7 @@ path_forwarding_outcome = best_path['forwardingOutcome']
 # forwardingOutcome: DELIVERED, DELIVERED_TO_INCORRECT_LOCATION, BLACKHOLE, DROPPED, INADMISSIBLE, UNREACHABLE, LOOP
 # securityOutcome: PERMITTED, DENIED
 
-if path_forwarding_outcome == "DENIED":
+if path_forwarding_outcome != "DELIVERED":
     print("The is no valid routing path between source and destination")
     print("Please contact your network administrator")
     exit(1)
@@ -47,7 +47,7 @@ elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "DENIED
                 print(hop['deviceName'])
 
 else:
-    print("something went wrong!!")
+    print("Something went wrong!!")
     print("Path Security Outcome: "   + path_security_outcome)
     print("Path Forwarding Outcome: " + path_forwarding_outcome)
     exit(1)
