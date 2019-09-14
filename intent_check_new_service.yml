@@ -17,15 +17,15 @@
         name: "Check added by Jenkins CI/CD Pipeline"
         type: "typical_5_tuple"
         data:
-          source: "ESXi-2_vSwitch23"
-          ipv4_dst: "10.110.57.34"
-          ip_proto: tcp
-          tp_src: http
-          tp_dst: https
+          source: "{{srcIp}}"
+          ipv4_dst: "{{dstIp}}"
+#          ip_proto: tcp
+#          tp_src: http
+          tp_dst: {{dstPort}}
       register: check_output
 #      failed_when: check_output.result.status != expected_check_status
 
-#    - name: Print Check info
-#      debug:
-#        msg:
-#          - "Dump all output: : {{ check_output }}"
+    - name: Print Check info
+      debug:
+        msg:
+          - "Dump all output: : {{ check_output }}"
