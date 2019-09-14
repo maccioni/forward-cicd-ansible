@@ -8,7 +8,7 @@ pipeline {
 //                sh "export JENKINS_IS_CHANGE_NEEDED=TRUE"
                 sh 'env'
                 sh "cp intent_check_new_service.yml fwd-ansible"
-                sh "cp /var/lib/jenkins/forward.properties fwd-ansible/fwd-ansible.properties"
+//                sh "cp /var/lib/jenkins/forward.properties fwd-ansible/fwd-ansible.properties"
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
             }
         }
