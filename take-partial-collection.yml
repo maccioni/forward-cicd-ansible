@@ -11,7 +11,7 @@
       ###### STEP 1: Start a Partial Collection ######
     - name: Start Partial Collection
       uri:
-        url: https://{{base_url}}/networks/{{network_id}}/startcollection
+        url: {{url}}/api/networks/{{network_id}}/startcollection
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"
