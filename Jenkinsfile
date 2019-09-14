@@ -30,13 +30,13 @@ pipeline {
                 echo "Change security policy in the Forward Sandbox"
                 sh "ansible-playbook save-changes-in-sandbox.yml -vvvvv"
                 echo "Creating a new IntentCheck for the new service"
-                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
+//                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook get-checks.yml"
                 script {
                     try {
                         echo "Verify all Checks"
-                        sh "python verify-checks.py"
+//                        sh "python verify-checks.py"
                     } catch (error) {
                         echo("Some Checks are failing.  Rolling back configuration.")
                         sh "ansible-playbook rollback.yml -vvvv"
