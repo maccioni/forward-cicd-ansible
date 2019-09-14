@@ -21,7 +21,7 @@
           ipv4_dst: "{{dstIp}}"
 #          ip_proto: tcp
 #          tp_src: http
-          tp_dst: {{dstPort}}
+          tp_dst: "{{dstPort}}"
       register: check_output
 #      failed_when: check_output.result.status != expected_check_status
 
