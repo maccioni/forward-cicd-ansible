@@ -11,14 +11,14 @@
       ###### STEP 1: Start a Partial Collection ######
     - name: Start Partial Collection
       uri:
-        url: {{url}}/api/networks/{{network_id}}/startcollection
+        url: "{{ url }}"/api/networks/{{network_id}}/startcollection
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"
         password: "{{ password }}"
         body_format: json
         body:
-          devices: ["a70*"]
+          devices: ["PANOS*"]
         return_content: yes
       register: collection_output
 
