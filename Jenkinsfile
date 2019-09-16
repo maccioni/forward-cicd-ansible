@@ -15,7 +15,7 @@ pipeline {
                 echo "Getting Path info using Ansible URI module"
 //                sh "ansible-playbook get_path.yml -vvvvv"
                 echo "Checking if routing and policies are already in place for the given path"
-                sh "python is_change_needed.py"
+//                sh "python is_change_needed.py"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
