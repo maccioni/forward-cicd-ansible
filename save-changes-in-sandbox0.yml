@@ -4,7 +4,7 @@
   gather_facts: no
 
   vars_files:
-    - /var/lib/jenkins/forward.properties
+    - /Users/fabriziomaccioni/src/forward-cicd-ansible/forward.properties
 
   tasks:
 
@@ -29,7 +29,7 @@
 
     #### Step 2: Save changes into Sanbox by uploading the new device config ####
     - name: Save changes into Sandox
-      shell: 'curl  -X "POST" "https://{{base_url}}/snapshots/{{fork_output.json.id}}/files" -u {{ username }}:{{ password }} -F "file=@/var/lib/jenkins/{{ device_name }}_config.txt"  -k'
+      shell: 'curl  -X "POST" "https://{{base_url}}/snapshots/{{fork_output.json.id}}/files" -u {{ username }}:{{ password }} -F "file=@/Users/fabriziomaccioni/Documents/Events/2019/NetworkingFiledDay21/API-testing/{{ device_name }}_config.txt"  -k'
       register: save_output
 
     - name: Print Save Changes info
