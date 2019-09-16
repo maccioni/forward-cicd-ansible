@@ -43,7 +43,7 @@ pipeline {
             steps {
 
                 echo "Copy Ansible inventory and playbooks to remote server)"
-                sh "scp hosts root@10.128.2.244:"
+                sh "scp /etc/ansible/hosts root@10.128.2.244:"
                 sh "scp deploy_changes.yml root@10.128.2.244:"
                 sh "scp rollback_changes.yml root@10.128.2.244:"
                 sh "scp /var/lib/jenkins/forward.properties root@10.128.2.244:/root/forward.properties"
