@@ -20,10 +20,6 @@ pipeline {
             }
         }
         stage('Verify change in Sandbox') {
-//            when {
-//                Proceed only if Only say hello if a "greeting" is requested
-//                expression { ${env.JENKINS_IS_CHANGE_NEEDED} == 'TRUE' }
-//            }
             steps {
                 echo "Change security policy in the Forward Sandbox"
                 sh "ansible-playbook save_changes_in_sandbox.yml -vvvvv"

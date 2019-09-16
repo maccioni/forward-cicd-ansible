@@ -35,8 +35,7 @@
     - name: Print Save Changes into Sandox info
       debug:
         msg:
-          - "API URL: {{ save_output.url }}"
-          - "API Status: {{ save_output.status }}"
+          - "Curl Status: {{ save_output.status }}"
 
     #### Step 3: Commit change to Sandbox  ####
     - name: Commit changes in Sandox
