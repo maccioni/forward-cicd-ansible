@@ -43,7 +43,7 @@ pipeline {
             steps {
                 echo "Push changes to production using Ansible playbook)"
 //                sh "ansible-playbook deploy_changes.yml -vvvv"
-                sh "scp deploy_changes.yml root@10.128.2.244"
+                sh "scp deploy_changes.yml root@10.128.2.244:"
                 sh "ssh root@10.128.2.244 'ansible-playbook deploy_changes.yml -vvvv'"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
