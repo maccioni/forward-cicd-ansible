@@ -5,8 +5,11 @@
   connection: local
   gather_facts: no
 
+  # I have no found a way to configure a jump host for panos devices.
+  # This playbook is copied and run in the remote server by Jenkins
   vars_files:
-    - /var/lib/jenkins/forward.properties
+    - /root/forward.properties
+#    - /var/lib/jenkins/forward.properties
 
   roles:
     - role: paloaltonetworks.paloaltonetworks
