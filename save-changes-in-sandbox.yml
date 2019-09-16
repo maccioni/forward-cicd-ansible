@@ -11,7 +11,7 @@
       #### Step 1: fork the given snapshot ####
     - name: Fork current snapshot
       uri:
-        url: https://{{base_url}}/snapshots/243646/fork?snapshotName=snapshot-fork
+        url: https://{{base_url}}/snapshots/{{snapshotId}}/fork?snapshotName=cicd-testing
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"
@@ -31,7 +31,7 @@
     - name: Save changes into Sandox
       shell: 'curl  -X "POST" "https://{{base_url}}/snapshots/{{fork_output.json.id}}/files" \
                   -u {{ username }}:{{ password }} \
-                  -F "file=@/var/lib/jenkins/{{ device_name }}_config.txt"
+                  -F "file=@/var/lib/jenkins/{{ device_name }}_config.txt
                   -k'
       register: save_output
 

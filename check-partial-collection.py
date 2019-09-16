@@ -35,7 +35,7 @@ if counter = 10:
 if status == "PASS":
     print("All the Forward Check are OK!")
 elif status == "FAIL":
-    print("Exiting from post-chsange verification with errors!")
+    print("Exiting from post-change verification with errors!")
     sys.exit(1)
 else:
     print("Unknown status: " + status)
