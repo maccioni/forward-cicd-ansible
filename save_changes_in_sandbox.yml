@@ -32,11 +32,6 @@
       shell: 'curl  -X "POST" "https://{{base_url}}/snapshots/{{fork_output.json.id}}/files" -u {{ username }}:{{ password }} -F "file=@/var/lib/jenkins/{{ device_name }}_config.txt"  -k'
       register: save_output
 
-    - name: Print Save Changes into Sandox info
-      debug:
-        msg:
-          - "Curl output: {{ save_output.output }}"
-
     #### Step 3: Commit change to Sandbox  ####
     - name: Commit changes in Sandox
       uri:
