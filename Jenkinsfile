@@ -41,11 +41,14 @@ pipeline {
         }
         stage('Apply network change to production') {
             steps {
+
+                echo "Copy Ansible inventory and playbooks to remote server)"
+                sh "scp hosts root@10.128.2.244:"
+                sh "scp deploy_changes.yml root@10.128.2.244:"
+                sh "scp rollback_changes.yml root@10.128.2.244:"
+                sh "scp /var/lib/jenkins/forward.properties root@10.128.2.244:/root/forward.properties"
                 echo "Push changes to production using Ansible playbook)"
 //                sh "ansible-playbook deploy_changes.yml -vvvv"
-                echo "Copy Ansible inventory and playbooks to remote server)"
-                sh "scp hosts deploy_changes.yml rollback_changes.yml root@10.128.2.244:"
-                sh "scp /var/lib/jenkins/forward.properties root@10.128.2.244:/root/forward.properties"
                 sh "ssh root@10.128.2.244 'ansible-playbook deploy_changes.yml -vvvv'"
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
