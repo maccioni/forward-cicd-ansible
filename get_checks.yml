@@ -26,8 +26,8 @@
     - name: Print API status info
       debug:
         msg:
-          - "API Status: {{ checks_output.status }}"
           - "API URL: {{ checks_output.url }}"
+          - "API Status: {{ checks_output.status }}"
 
     - name: Save all output to file
       copy:

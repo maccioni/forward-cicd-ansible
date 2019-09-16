@@ -1,6 +1,6 @@
 ---
 
-- name: Change Security policy on Palo Alto Networks device
+- name: Rollback Security policy on Palo Alto Networks device
   hosts: 10.10.20.27
   connection: local
   gather_facts: no
@@ -20,8 +20,9 @@
         password: '{{ panos_password }}'
         rule_name: 'permit ACME service'
         description: 'Permit access to ACME server on https'
-        destination_ip: '{{ panosDstIp }}'
+        destination_ip: '{{ dstIp }}'
         category: ['any']
         application: ['any']
         action: 'allow'
+        operation: delete
         commit: yes

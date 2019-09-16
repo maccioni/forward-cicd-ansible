@@ -23,8 +23,8 @@
     - name: Print Snapshot Fork info
       debug:
         msg:
-          - "API Status: {{ fork_output.status }}"
           - "API URL: {{ fork_output.url }}"
+          - "API Status: {{ fork_output.status }}"
           - "Fork id: {{ fork_output.json.id }}"
 
     #### Step 2: Save changes into Sanbox by uploading the new device config ####
@@ -32,13 +32,13 @@
       shell: 'curl  -X "POST" "https://{{base_url}}/snapshots/{{fork_output.json.id}}/files" -u {{ username }}:{{ password }} -F "file=@/var/lib/jenkins/{{ device_name }}_config.txt"  -k'
       register: save_output
 
-    - name: Print Save Changes info
+    - name: Print Save Changes into Sandox info
       debug:
         msg:
-          - "Save output: {{ save_output }}"
-#          - "id: {{ save_output.id }}"
-#          - "Filename: {{ save_output.filename }}"
+          - "API URL: {{ save_output.url }}"
+          - "API Status: {{ save_output.status }}"
 
+    #### Step 3: Commit change to Sandbox  ####
     - name: Commit changes in Sandox
       uri:
         url: https://{{base_url}}/snapshots/{{fork_output.json.id}}/commit?changed
@@ -49,11 +49,9 @@
         body_format: json
         return_content: yes
       register: commit_output
-#      failed_when: collection_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Commit Changes info
       debug:
         msg:
-          - "API Status: {{ commit_output.status }}"
           - "API URL: {{ commit_output.url }}"
-          - "Commit output: {{ commit_output }}"
+          - "API Status: {{ commit_output.status }}"

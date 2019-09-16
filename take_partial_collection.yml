@@ -25,8 +25,8 @@
     - name: Print Collection info
       debug:
         msg:
-          - "API Status: {{ collection_output.status }}"
           - "API URL: {{ collection_output.url }}"
+          - "API Status: {{ collection_output.status }}"
 
       ###### STEP 2: wait until the collection is over ######
       #
@@ -49,8 +49,8 @@
     - name: Print Collector Status info
       debug:
         msg:
-          - "API Status: {{ collector_status_output.status }}"
           - "API URL: {{ collector_status_output.url }}"
+          - "API Status: {{ collector_status_output.status }}"
           - "Collector busyStatus: {{ collector_status_output.json.busyStatus }}"
 
       ###### STEP 3: wait until the snapshot processing is over ######
@@ -71,9 +71,9 @@
     - name: Print Snapshots Status info
       debug:
         msg:
-          - "API Status: {{ snapshots_output.status }}"
           - "API URL: {{ snapshots_output.url }}"
-          - "Snapshots: {{ snapshots_output.json.snapshots }}"
+          - "API Status: {{ snapshots_output.status }}"
+#          - "Snapshots: {{ snapshots_output.json.snapshots }}"
           - "Partial collection id: {{ snapshots_output.json.snapshots[0].id }}"
 
     - name: Make sure the collection is over by checking the latestProcessed id
@@ -92,7 +92,7 @@
     - name: Print latestProcessed Status info
       debug:
         msg:
-          - "API Status: {{ latest_processed_output.status }}"
           - "API URL: {{ latest_processed_output.url }}"
+          - "API Status: {{ latest_processed_output.status }}"
           - "latestProcessed id: {{ latest_processed_output.json.id }}"
           - "Partial Collection id: {{ snapshots_output.json.snapshots[0].id }}"
