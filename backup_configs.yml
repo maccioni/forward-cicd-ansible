@@ -1,0 +1,66 @@
+---
+
+- name: Backup Cisco devices
+  hosts: eve_ios
+  gather_facts: no
+
+  tasks:
+    - name: show running config and save it
+      ios_command:
+        lines:
+          - show running
+      register: config
+
+    - copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "configs/{{ inventory_hostname }}.txt"
+
+- name: Backup Juniper devices
+  hosts: eve_junos
+  gather_facts: no
+
+  tasks:
+    - name: show config in set format and save it
+      junos_command:
+        commands: show configuration | display set | no-more
+      register: config
+
+    - copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "configs/{{ inventory_hostname }}.txt"
+
+- name: Backup F5 devices
+  hosts: eve_f5
+  gather_facts: no
+
+  tasks:
+    - name: show running config and save it
+      bigip_command:
+        commands: tmsh show running-config
+        wait_for: result[0] contains BIG-IP
+        provider:
+          server: lb.mydomain.com
+          password: secret
+          user: admin
+      register: config
+
+    - copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "configs/{{ inventory_hostname }}.txt"
+
+- name: Backup Panos devices
+  hosts: eve_panos
+  gather_facts: no
+
+  tasks:
+    - name: show configuration and save it
+      panos_op:
+        ip_address: '{{ ip_address }}'
+        username: '{{ username }}'
+        password: '{{ password }}'
+        cmd: 'show'
+      register: config
+
+    - copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "configs/{{ inventory_hostname }}.txt"

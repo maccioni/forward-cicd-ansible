@@ -1,0 +1,82 @@
+# This is based on the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+# Add proxycommand to use a jump host
+[eve_ng:vars]
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q root@10.128.2.244"'
+
+[eve_ios:vars]
+ansible_network_os=ios
+ansible_connection=network_cli
+ansible_user=admin
+ansible_password=forward
+
+[eve_panos:vars]
+ansible_user=ansible
+ansible_password=ansible
+
+[eve_ng:children]
+eve_ios
+eve_panos
+eve_f5
+eve_junos
+
+[eve_ios]
+10.10.20.11
+10.10.20.12
+10.10.20.13
+10.10.20.14
+10.10.20.23
+10.10.20.24
+10.10.20.25
+
+[eve_junos]
+10.10.20.31
+
+[eve_panos]
+10.10.20.15
+10.10.20.27
+
+[eve_f5]
+10.10.20.31
+
+# Ex 1: Ungrouped hosts, specify before any group headers.
+
+#green.example.com
+#blue.example.com
+#192.168.100.1
+#192.168.100.10
+
+# Ex 2: A collection of hosts belonging to the 'webservers' group
+
+#[webservers]
+#alpha.example.org
+#beta.example.org
+#192.168.1.100
+#192.168.1.110
+
+# If you have multiple hosts following a pattern you can specify
+# them like this:
+
+#www[001:006].example.com
+
+# Ex 3: A collection of database servers in the 'dbservers' group
+
+#[dbservers]
+#
+#db01.intranet.mydomain.net
+#db02.intranet.mydomain.net
+#10.25.1.56
+#10.25.1.57
+
+# Here's another example of host ranges, this time there are no
+# leading 0s:
+
+#db-[99:101]-node.example.com
