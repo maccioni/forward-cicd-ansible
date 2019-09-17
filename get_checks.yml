@@ -14,7 +14,7 @@
   tasks:
     - name: GET all the Forward Checks using the Forward Checks REST API
       uri:
-        url: {{url}}/api/snapshots/{{snapshotId}}/checks
+        url: "{{url}}/api/snapshots/{{snapshotId}}/checks"
         method: GET
         force_basic_auth: yes
         user: "{{ username }}"

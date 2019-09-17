@@ -11,7 +11,7 @@
       #### Step 1: fork the given snapshot ####
     - name: Fork current snapshot
       uri:
-        url: {{url}}/api/snapshots/{{snapshotId}}/fork?snapshotName=cicd-testing
+        url: "{{url}}/api/snapshots/{{snapshotId}}/fork?snapshotName=cicd-testing"
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"
@@ -35,7 +35,7 @@
     #### Step 3: Commit change to Sandbox  ####
     - name: Commit changes in Sandox
       uri:
-        url: {{url}}/api/snapshots/{{fork_output.json.id}}/commit?changed
+        url: "{{url}}/api/snapshots/{{fork_output.json.id}}/commit?changed"
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"

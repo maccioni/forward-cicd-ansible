@@ -11,7 +11,7 @@
       ###### STEP 1: Start a Partial Collection ######
     - name: Start Partial Collection
       uri:
-        url: {{url}}/api/networks/{{network_id}}/startcollection
+        url: "{{url}}/api/networks/{{network_id}}/startcollection"
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"
@@ -34,7 +34,7 @@
       # network's collector and see when the status changes from COLLECTING to IDLE
     - name: Make sure the collection is over
       uri:
-        url: {{url}}/api/networks/{{network_id}}/collector/status
+        url: "{{url}}/api/networks/{{network_id}}/collector/status"
         method: GET
         force_basic_auth: yes
         user: "{{ username }}"
@@ -60,7 +60,7 @@
       # first in the snapshots list)
     - name: Get the list of all snapshots
       uri:
-        url: {{url}}/api/networks/{{network_id}}/snapshots
+        url: "{{url}}/api/networks/{{network_id}}/snapshots"
         force_basic_auth: yes
         user: "{{ username }}"
         password: "{{ password }}"
@@ -78,7 +78,7 @@
 
     - name: Make sure the collection is over by checking the latestProcessed id
       uri:
-        url: {{url}}/api/networks/{{network_id}}/snapshots/latestProcessed
+        url: "{{url}}/api/networks/{{network_id}}/snapshots/latestProcessed"
         force_basic_auth: yes
         user: "{{ username }}"
         password: "{{ password }}"
