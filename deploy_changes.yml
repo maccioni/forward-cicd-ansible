@@ -21,9 +21,9 @@
         ip_address: '{{ panos_ip }}'
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
-        rule_name: 'permit ACME service'
-        description: 'Permit access to ACME server on https'
-        destination_ip: '{{ dstIp }}'
+        rule_name: 'Allow Arrodugo service'
+        description: 'permit access to Arrodugo service'
+        destination_ip: 'Arrodugo server'
         category: ['any']
         application: ['any']
         action: 'allow'
