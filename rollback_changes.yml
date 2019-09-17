@@ -21,11 +21,6 @@
         ip_address: '{{ panos_ip }}'
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
-        rule_name: 'permit ACME service'
-        description: 'Permit access to ACME server on https'
-        destination_ip: '{{ dstIp }}'
-        category: ['any']
-        application: ['any']
-        action: 'allow'
+        rule_name: 'Allow Arrodugo service'
         operation: delete
         commit: yes

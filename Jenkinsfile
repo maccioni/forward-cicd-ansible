@@ -64,7 +64,7 @@ pipeline {
                         sh "python verify_checks.py"
                     } catch (error) {
                         echo("Some Checks are failing.  Rolling back configuration.")
-                        sh "ansible-playbook rollback_changes.yml -vvvv"
+                        sh "ssh root@10.128.2.244 'ansible-playbook rollback_changes.yml -vvvv'"
                     }
                 }
                 echo "currentBuild.currentResult: ${currentBuild.currentResult}"
