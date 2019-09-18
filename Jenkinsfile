@@ -26,7 +26,7 @@ pipeline {
                 echo "Creating a new IntentCheck for the new service"
 //                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
                 echo "Get all Checks using Ansible URI module"
-                sh "ansible-playbook get_checks.yml"
+                sh "ansible-playbook get_predict_checks.yml"
                 script {
                     try {
                         echo "Verify all Checks"
@@ -57,7 +57,7 @@ pipeline {
                 echo "Collect from modified devices only and make sure collection and processing are over"
                 sh "ansible-playbook take_partial_collection.yml -vvvv"
                 echo "Get all Checks using Ansible URI module"
-                sh "ansible-playbook get_checks.yml"
+                sh "ansible-playbook get_partial_collection_checks.yml"
                 script {
                     try {
                         echo "Verify all Checks"

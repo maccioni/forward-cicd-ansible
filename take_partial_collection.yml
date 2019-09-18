@@ -68,6 +68,10 @@
         return_content: yes
       register: snapshots_output
 
+    -name: set ansible variable with partial collection snapshot id
+     set_fact:
+       partial_collection_snapshot_id: {{ snapshots_output.json.snapshots[0].id }}
+
     - name: Print Snapshots Status info
       debug:
         msg:
