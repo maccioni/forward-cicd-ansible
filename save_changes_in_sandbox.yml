@@ -44,9 +44,9 @@
         return_content: yes
       register: commit_output
 
-    -name: set ansible variable with new snapshot id
-     set_fact:
-       predict_snapshot_id: {{ commit_output.json.id }}
+    - name: set ansible variable with new snapshot id
+      set_fact:
+        predict_snapshot_id: {{ commit_output.json.id }}
 
     - name: Print Commit Changes info
       debug:
