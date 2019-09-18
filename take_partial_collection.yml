@@ -72,13 +72,20 @@
       set_fact:
         partial_collection_snapshot_id: "{{ snapshots_output.json.snapshots[0].id }}"
 
+
     - name: Print Snapshots Status info
       debug:
         msg:
           - "API URL: {{ snapshots_output.url }}"
           - "API Status: {{ snapshots_output.status }}"
-#          - "Snapshots: {{ snapshots_output.json.snapshots }}"
           - "Partial collection id: {{ snapshots_output.json.snapshots[0].id }}"
+
+    # the partial collection snapshot id is saved to a local file so that can be used
+    # to get the checks in the get_snapshot playbook
+    - name: Save partial collection snapshot id to a local file
+      copy:
+        content: "{{ snapshots_output.json.snapshots[0].id }}"
+        dest: "new_snapshot_id"
 
     - name: Make sure the collection is over by checking the latestProcessed id
       uri:

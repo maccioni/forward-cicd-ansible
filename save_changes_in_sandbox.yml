@@ -44,13 +44,16 @@
         return_content: yes
       register: commit_output
 
-    - name: set ansible variable with new snapshot id
-      set_fact:
-        predict_snapshot_id: "{{ commit_output.json.id }}"
-
     - name: Print Commit Changes info
       debug:
         msg:
           - "API URL: {{ commit_output.url }}"
           - "API Status: {{ commit_output.status }}"
           - "New snapshot id: {{ commit_output.json.id }}"
+
+    # the predict snapshot id is saved to a local file so that can be used
+    # to get the checks in the get_snapshot playbook
+    - name: Save predict snapshot id to a local file
+      copy:
+        content: "{{ commit_output.json.id }}"
+        dest: "new_snapshot_id"
