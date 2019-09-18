@@ -14,9 +14,21 @@
   roles:
     - role: paloaltonetworks.paloaltonetworks
 
-# https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
   tasks:
-    - name: Change Security Rules
+
+      # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_address_object.py
+    - name: Create server object
+      panos_address_object:
+        ip_address: '{{ panos_ip }}'
+        username: '{{ panos_user }}'
+        password: '{{ panos_password }}'
+        name: 'Arrodugo server'
+        value: '10.1.102.5/32'
+        description: 'Arrodugo server object'
+        state: 'present'
+
+      # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
+    - name: Add Security Rules
       panos_security_rule:
         ip_address: '{{ panos_ip }}'
         username: '{{ panos_user }}'

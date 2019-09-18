@@ -9,14 +9,24 @@
   # This playbook is copied and run in the remote server by Jenkins
   vars_files:
     - /root/forward.properties
-#    - /var/lib/jenkins/forward.properties
 
   roles:
     - role: paloaltonetworks.paloaltonetworks
 
-# https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
+
   tasks:
-    - name: Change Security Rules
+
+      # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_address_object.py
+    - name: Delete server object
+      panos_address_object:
+        ip_address: '{{ panos_ip }}'
+        username: '{{ panos_user }}'
+        password: '{{ panos_password }}'
+        name: 'Arrodugo server'
+        state: 'absent'
+
+      # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
+    - name: Remove Security Rules
       panos_security_rule:
         ip_address: '{{ panos_ip }}'
         username: '{{ panos_user }}'
