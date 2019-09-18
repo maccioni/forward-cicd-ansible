@@ -22,5 +22,5 @@
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
         rule_name: 'Allow Arrodugo service'
-        operation: delete
+        state: absent
         commit: yes

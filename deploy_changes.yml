@@ -28,3 +28,4 @@
         application: ['any']
         action: 'allow'
         commit: yes
+        location: 'top'
