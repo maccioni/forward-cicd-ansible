@@ -1,12 +1,13 @@
 ---
 
 - name: Change Security policy on Palo Alto Networks device
-  hosts: 10.10.20.27
+  hosts: eve_panos
   connection: local
   gather_facts: no
 
   vars:
     # Read firewall_ip from file created by is_change_needed Python script
+    # The tasks will be executed only on this firewall
     firewall_ip: "{{lookup('file', 'firewall_ip')}}"
 
   # I have no found a way to configure a jump host for panos devices.
@@ -30,6 +31,7 @@
         value: '{{ server_ip }}/32'
         description: '{{ service_name }} server object'
         state: 'present'
+      when: {{ inventory_hostname }} == {{ firewall_ip }}
 
       # Task based on this module:
       # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
@@ -46,3 +48,4 @@
         action: 'allow'
         commit: yes
         location: 'top'
+      when: {{ inventory_hostname }} == {{ firewall_ip }}

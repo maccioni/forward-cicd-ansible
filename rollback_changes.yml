@@ -5,6 +5,11 @@
   connection: local
   gather_facts: no
 
+  vars:
+    # Read firewall_ip from file created by is_change_needed Python script
+    # The tasks will be executed only on this firewall
+    firewall_ip: "{{lookup('file', 'firewall_ip')}}"
+
   # I have no found a way to configure a jump host for panos devices.
   # This playbook is copied and run in the remote server by Jenkins
   vars_files:
@@ -19,18 +24,20 @@
       # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_address_object.py
     - name: Delete server object
       panos_address_object:
-        ip_address: '{{ panos_ip }}'
+        ip_address: '{{ firewall_ip }}'
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
-        name: 'Arrodugo server'
+        name: '{{ panos_service }} server'
         state: 'absent'
+      when: {{ inventory_hostname }} == {{ firewall_ip }}
 
       # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
     - name: Remove Security Rules
       panos_security_rule:
-        ip_address: '{{ panos_ip }}'
+        ip_address: '{{ firewall_ip }}'
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
-        rule_name: 'Allow Arrodugo service'
+        rule_name: 'Allow {{ panos_service }} service'
         state: absent
         commit: yes
+      when: {{ inventory_hostname }} == {{ firewall_ip }}
