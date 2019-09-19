@@ -5,6 +5,7 @@ test.yml
 *.json
 *.output
 *.retry
+firewall*
 
 __pycache__/
 *.py[cod]

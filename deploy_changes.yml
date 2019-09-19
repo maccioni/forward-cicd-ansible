@@ -15,27 +15,28 @@
     - role: paloaltonetworks.paloaltonetworks
 
   tasks:
-
+      # Task based on this module:
       # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_address_object.py
     - name: Create server object
       panos_address_object:
-        ip_address: '{{ panos_ip }}'
+        ip_address: '{{lookup('file', 'device_ip')}}'
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
-        name: 'Arrodugo server'
-        value: '10.1.102.5/32'
-        description: 'Arrodugo server object'
+        name: '{{ service_name }} server'
+        value: '{{ server_ip }}/32'
+        description: '{{ service_name }} server object'
         state: 'present'
 
+      # Task based on this module:
       # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
     - name: Add Security Rules
       panos_security_rule:
-        ip_address: '{{ panos_ip }}'
+        ip_address: '{{lookup('file', 'firewall_ip')}}'
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
-        rule_name: 'Allow Arrodugo service'
-        description: 'permit access to Arrodugo service'
-        destination_ip: 'Arrodugo server'
+        rule_name: 'Allow {{ service_name }} service'
+        description: 'permit access to {{ service_name }} service'
+        destination_ip: '{{ service_name }} server'
         category: ['any']
         application: ['any']
         action: 'allow'

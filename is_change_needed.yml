@@ -1,0 +1,13 @@
+- name: Check if the security change is needed
+
+  hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - /var/lib/jenkins/forward.properties
+
+  tasks:
+
+    - name: Run python script to look for device blocking traffic and record list
+      shell: 'python is_change_needed.py {{url}}/api/networks/{{network_id}}/deviceSources {{ username }} {{ password }}'
+      register: python_output
