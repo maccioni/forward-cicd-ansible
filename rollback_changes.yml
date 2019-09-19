@@ -29,7 +29,7 @@
         password: '{{ panos_password }}'
         name: '{{ panos_service }} server'
         state: 'absent'
-      when: {{ inventory_hostname }} == {{ firewall_ip }}
+      when: '{{ inventory_hostname }}' == '{{ firewall_ip }}'
 
       # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
     - name: Remove Security Rules
@@ -40,4 +40,4 @@
         rule_name: 'Allow {{ panos_service }} service'
         state: absent
         commit: yes
-      when: {{ inventory_hostname }} == {{ firewall_ip }}
+      when: '{{ inventory_hostname }}' == '{{ firewall_ip }}'
