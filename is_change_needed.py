@@ -25,7 +25,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 # The patch APIs returns device names.
-# This function translates device name into device ip 
+# This function translates device name into device ip
 def get_device_ip(device_name):
     device_list = requests.get(args.url, auth=(args.username, args.password), verify=args.verify).json()
     for device in device_list:
@@ -69,12 +69,15 @@ elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "DENIED
     for hop in best_path['hops']:
         for behavior in hop['behaviors']:
             if behavior == "ACL_DENY":
-                #Save device name into file
+                
+                # Save device name into file to be used to save the device's
+                # config file to the Sandbox
                 print(hop['deviceName'])
                 f_name.write(hop['deviceName'])
-                #Translate device name into device ip and store it into a files
+
+                # Translate device name into device ip and store it into a files
+                # to be used in the panos playbooks
                 firewall_ip = get_device_ip(hop['deviceName'])
-                print(firewall_ip)
                 f_ip.write(firewall_ip)
     f_ip.close()
     f_name.close()
