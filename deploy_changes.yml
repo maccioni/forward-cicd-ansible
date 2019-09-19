@@ -6,6 +6,7 @@
   gather_facts: no
 
   vars:
+    # Read firewall_ip from file created by is_change_needed Python script
     firewall_ip: "{{lookup('file', 'firewall_ip')}}"
 
   # I have no found a way to configure a jump host for panos devices.
@@ -34,7 +35,7 @@
       # https://github.com/PaloAltoNetworks/ansible-pan/blob/master/library/panos_security_rule.py
     - name: Add Security Rules
       panos_security_rule:
-        ip_address: '{{lookup('file', 'firewall_ip')}}'
+        ip_address: '{{ firewall_ip }}'
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
         rule_name: 'Allow {{ service_name }} service'
