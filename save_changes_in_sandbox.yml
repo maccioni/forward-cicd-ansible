@@ -4,6 +4,7 @@
   gather_facts: no
 
   vars:
+    # Read firewall_name from file created by is_change_needed Python script
     firewall_name: "{{lookup('file', 'firewall_name')}}"
 
   vars_files:
