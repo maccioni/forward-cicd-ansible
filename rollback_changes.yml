@@ -1,7 +1,7 @@
 ---
 
 - name: Rollback Security policy on Palo Alto Networks device
-  hosts: 10.10.20.27
+  hosts: eve_panos
   connection: local
   gather_facts: no
 
