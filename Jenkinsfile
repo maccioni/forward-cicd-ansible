@@ -23,7 +23,7 @@ pipeline {
                 echo "Change security policy in the Forward Sandbox"
                 sh "ansible-playbook save_changes_in_sandbox.yml -vvvvv"
                 echo "Creating a new IntentCheck for the new service"
-                sh "ansible-playbook intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
+                sh "ansible-playbook intent_check_new_service.yml -vvvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook get_checks.yml"
                 script {
