@@ -5,8 +5,6 @@ pipeline {
         stage('Download code from GitHub') {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
-                echo "Copy files needed to run Panos playbooks in the jump host server"
-                sh "scp /etc/ansible/hosts ansible.cfg firewall_ip deploy_changes.yml rollback_changes.yml /var/lib/jenkins/forward.properties root@10.128.2.244:"
                 sh 'env'
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
             }
@@ -42,7 +40,8 @@ pipeline {
         }
         stage('Apply network change to production') {
             steps {
-
+            echo "Copy files needed to run Panos playbooks in the jump host server"
+            sh "scp /etc/ansible/hosts ansible.cfg firewall_ip deploy_changes.yml rollback_changes.yml /var/lib/jenkins/forward.properties root@10.128.2.244:"
                 echo "Push changes to production by running Ansible playbook in remote server"
                 sh "ssh root@10.128.2.244 'ansible-playbook deploy_changes.yml -vvvv'"
 //                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
