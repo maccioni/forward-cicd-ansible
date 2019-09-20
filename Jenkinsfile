@@ -51,7 +51,7 @@ pipeline {
         stage('Verify new connectivity and check for regressions') {
             steps {
                 echo "Collect from modified devices only and make sure collection and processing are over"
-                sh "cp take_partial_collection.yml /var/lib/jenkins/fwd-ansible"
+                sh "cp take_partial_collection.yml firewall_name /var/lib/jenkins/fwd-ansible"
                 sh "ansible-playbook /var/lib/jenkins/fwd-ansible/take_partial_collection.yml -vvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook get_checks.yml"
