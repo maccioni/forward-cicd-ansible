@@ -23,7 +23,8 @@ pipeline {
                 echo "Change security policy in the Forward Sandbox"
                 sh "ansible-playbook save_changes_in_sandbox.yml -vvvvv"
                 echo "Creating a new IntentCheck for the new service"
-                sh "ansible-playbook intent_check_new_service.yml -vvvvv"
+                sh "cp intent_check_new_service.yml /var/lib/jenkins/fwd-ansible"
+                sh "ansible-playbook /var/lib/jenkins/fwd-ansible/intent_check_new_service.yml -vvvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook get_checks.yml"
                 script {
@@ -50,7 +51,8 @@ pipeline {
         stage('Verify new connectivity and check for regressions') {
             steps {
                 echo "Collect from modified devices only and make sure collection and processing are over"
-                sh "ansible-playbook take_partial_collection.yml -vvvv"
+                sh "cp take_partial_collection.yml /var/lib/jenkins/fwd-ansible"
+                sh "ansible-playbook /var/lib/jenkins/fwd-ansible/take_partial_collection.yml -vvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook get_checks.yml"
                 script {
