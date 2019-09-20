@@ -14,7 +14,6 @@
   # This playbook is copied and run in the remote server by Jenkins
   vars_files:
     - /root/forward.properties
-#    - /var/lib/jenkins/forward.properties
 
   roles:
     - role: paloaltonetworks.paloaltonetworks

@@ -24,7 +24,7 @@ pipeline {
                 sh "ansible-playbook save_changes_in_sandbox.yml -vvvvv"
                 echo "Creating a new IntentCheck for the new service"
                 sh "cp intent_check_new_service.yml /var/lib/jenkins/fwd-ansible"
-//                sh "ansible-playbook /var/lib/jenkins/fwd-ansible/intent_check_new_service.yml -vvvvv"
+                sh "ansible-playbook /var/lib/jenkins/fwd-ansible/intent_check_new_service.yml -vvvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook get_checks.yml"
                 script {

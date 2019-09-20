@@ -12,14 +12,16 @@
   tasks:
     - name: Ensure a check matching new service intent is present
       forward_check:
+        url: "{{ url }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
         state: Present
         name: "Check added by Jenkins CI/CD Pipeline"
         type: "typical_5_tuple"
+        network_name: "{{network_name}}"
         data:
           source_host: "{{src_ip}}"
           ipv4_dst: "{{dst_ip}}"
-#          ip_proto: tcp
-#          tp_src: http
           tp_dst: "{{dst_port}}"
       register: check_output
 #      failed_when: check_output.result.status != expected_check_status
