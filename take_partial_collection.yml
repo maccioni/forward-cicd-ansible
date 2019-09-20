@@ -27,7 +27,7 @@
         url: "{{url}}"
         username: "{{ username }}"
         password: "{{ password }}"
-        network_name: FabrizioHQ
+        network_name: "{{ network_name }}"
 #        wait_time: 120
         type: collect
         devices: "{{lookup('file', 'firewall_name')}}"
@@ -36,12 +36,6 @@
     - name: Print snapshot link
       debug:
         msg: '{{ collection_output.snapshot_link }}'
-
-    - name: Print Collection info
-      debug:
-        msg:
-          - "API URL: {{ collection_output.url }}"
-          - "API Status: {{ collection_output.status }}"
 
       ###### STEP 2: wait until the collection is over ######
       #
