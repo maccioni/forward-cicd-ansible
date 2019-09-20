@@ -22,7 +22,6 @@
         body_format: json
         return_content: yes
       register: paths_output
-      failed_when: paths_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Paths info
       debug:
@@ -31,11 +30,6 @@
           - "API Status: {{ paths_output.status }}"
           - "Paths Security Outcome: {{ paths_output.json.info.paths[0].securityOutcome }}"
           - "Paths forwarding Outcome: {{ paths_output.json.info.paths[0].forwardingOutcome }}"
-
-    - name: Save all output to file
-      copy:
-        content: "{{ paths_output }}"
-        dest: "paths.output"
 
     - name: Save json output to file
       copy:
