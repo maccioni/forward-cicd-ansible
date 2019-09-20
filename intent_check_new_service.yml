@@ -16,7 +16,7 @@
         name: "Check added by Jenkins CI/CD Pipeline"
         type: "typical_5_tuple"
         data:
-          source: "{{src_ip}}"
+          source_host: "{{src_ip}}"
           ipv4_dst: "{{dst_ip}}"
 #          ip_proto: tcp
 #          tp_src: http
