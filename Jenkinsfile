@@ -5,8 +5,9 @@ pipeline {
         stage('Download code from GitHub') {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
+                echo "Copy files needed to run Panos playbooks in the jump host server"
+                sh "scp /etc/ansible/hosts ansible.cfg firewall_ip deploy_changes.yml rollback_changes.yml /var/lib/jenkins/forward.properties root@10.128.2.244:"
                 sh 'env'
-                sh "cp intent_check_new_service.yml fwd-ansible"
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
             }
         }
@@ -16,7 +17,7 @@ pipeline {
                 sh "ansible-playbook get_path.yml -vvvvv"
                 echo "Checking if routing and policies are already in place for the given path"
                 sh "ansible-playbook is_change_needed.yml -vvvvv"
-                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
+//                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Verify change in Sandbox') {
@@ -24,7 +25,7 @@ pipeline {
                 echo "Change security policy in the Forward Sandbox"
                 sh "ansible-playbook save_changes_in_sandbox.yml -vvvvv"
                 echo "Creating a new IntentCheck for the new service"
-//                sh "ansible-playbook fwd-ansible/intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
+                sh "ansible-playbook intent_check_new_service.yml --extra-vars=expected_check_status=FAIL -vvvvv"
                 echo "Get all Checks using Ansible URI module"
                 sh "ansible-playbook get_checks.yml"
                 script {
@@ -36,17 +37,15 @@ pipeline {
                         sh "ansible-playbook rollback_changes.yml -vvvv"
                     }
                 }
-                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
+//                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Apply network change to production') {
             steps {
 
-                echo "Copy files needed to run Panos playbooks to remote server)"
-                sh "scp /etc/ansible/hosts firewall_ip deploy_changes.yml rollback_changes.yml /var/lib/jenkins/forward.properties root@10.128.2.244:"
                 echo "Push changes to production by running Ansible playbook in remote server"
                 sh "ssh root@10.128.2.244 'ansible-playbook deploy_changes.yml -vvvv'"
-                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
+//                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Verify new connectivity and check for regressions') {
@@ -64,7 +63,7 @@ pipeline {
                         sh "ssh root@10.128.2.244 'ansible-playbook rollback_changes.yml -vvvv'"
                     }
                 }
-                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
+//                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
     }

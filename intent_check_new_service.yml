@@ -3,8 +3,8 @@
   hosts: localhost
   gather_facts: no
 
-#  vars_files:
-#    - /var/lib/jenkins/forward.properties
+  vars_files:
+    - /var/lib/jenkins/forward.properties
 
   vars:
     expected_check_status: PASS  # Default status
@@ -16,13 +16,15 @@
         name: "Check added by Jenkins CI/CD Pipeline"
         type: "typical_5_tuple"
         data:
-          source: "{{srcIp}}"
-          ipv4_dst: "{{dstIp}}"
-          ip_proto: tcp
-          tp_src: http
-          tp_dst: "{{dstPort}}"
+          source: "{{src_ip}}"
+          ipv4_dst: "{{dst_ip}}"
+#          ip_proto: tcp
+#          tp_src: http
+          tp_dst: "{{dst_port}}"
       register: check_output
-#      failed_when: check_output.result.status != expected_check_status
+      failed_when: check_output.result.status != expected_check_status
+
+        snapshot_id: 241774
 
     - name: Print Check info
       debug:

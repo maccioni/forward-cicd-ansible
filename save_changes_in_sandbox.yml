@@ -15,7 +15,7 @@
       #### Step 1: fork the given snapshot ####
     - name: Fork current snapshot
       uri:
-        url: "{{url}}/api/snapshots/{{snapshotId}}/fork?snapshotName=cicd-testing"
+        url: "{{url}}/api/snapshots/{{snapshot_id}}/fork?snapshotName=cicd-testing"
         method: POST
         force_basic_auth: yes
         user: "{{ username }}"

@@ -14,7 +14,7 @@
   tasks:
     - name: get best path using the Forward Paths REST API
       uri:
-        url: "{{url}}/api/snapshots/{{snapshotId}}/paths?srcIp={{srcIp}}&dstIp={{dstIp}}&dstPort={{dstPort}}"
+        url: "{{url}}/api/snapshots/{{snapshot_id}}/paths?srcIp={{src_ip}}&dstIp={{dst_ip}}&dstPort={{dst_port}}"
         method: GET
         force_basic_auth: yes
         user: "{{ username }}"
@@ -22,7 +22,7 @@
         body_format: json
         return_content: yes
       register: paths_output
-#      failed_when: paths_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
+      failed_when: paths_output.json.info.paths[0].forwardingOutcome != expected_forwarding_outcome_status
 
     - name: Print Paths info
       debug:
