@@ -29,7 +29,7 @@ add_address = open(address_file_name).read()
 # The initial configuration before the change is save in the local directory
 # while the new modified configuration is saved in the configs directory
 initial_config_file_name = "./tmp/" + args.name + "_config.txt"
-modified_config_file_name = "configs/" + initial_config_file_name
+modified_config_file_name = "./configs/" + args.name + "_config.txt"
 with open(initial_config_file_name) as data:
     with open(modified_config_file_name, 'w') as new_data:
         for line in data:
