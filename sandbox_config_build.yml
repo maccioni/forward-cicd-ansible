@@ -20,7 +20,7 @@
     # Filename used in the enpoint to get the config from the Forward platform
     url_fw_name: "{{fw_name}},configuration,16.txt"
     # Config file name used to upload the new config to the Forward Sandbox
-    config_file_name: "{{fw_name}}.txt"
+    config_file_name: "{{fw_name}}_config.txt"
 
   tasks:
 
