@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
     stage("Gather Deployment Parameters") {
         steps {
@@ -29,6 +28,7 @@ pipeline {
                 timeout(time: 60, unit: 'SECONDS') {
                 sh 'env'
                 sh "ansible-playbook save_inputs.yml -vvvvv"
+                }
             }
         }
         stage('Check if change is needed') {
