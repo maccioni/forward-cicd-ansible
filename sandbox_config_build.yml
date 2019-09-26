@@ -13,6 +13,8 @@
     - /var/lib/jenkins/forward.properties
 
   vars:
+    # Read Service IP address and firewall name from files stores in tmp
+    service_ip: "{{lookup('file', './tmp/service_ip')}}"
     # Read Firewall name from file created by the is_change_needed playbook
     fw_name: "{{lookup('file', './tmp/firewall_name')}}"
     # Filename used in the enpoint to get the config from the Forward platform
