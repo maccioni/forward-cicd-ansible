@@ -9,10 +9,8 @@
   # playbooks that include forward modules are not run in the Jenkins WORKSPACE
   # because are installed locally
   vars:
-    - fw_name_path: "{{lookup('env','WORKSPACE')}}/tmp"
-
-  vars:
     expected_check_status: PASS  # Default status
+    fw_name_path: "{{lookup('env','WORKSPACE')}}/tmp"
     # Read service ip and port from local file
     service_ip: "{{lookup('file', '{{fw_name_path}}/service_ip')}}"
     service_port:  "{{lookup('file', '{{fw_name_path}}/service_port')}}"
