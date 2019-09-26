@@ -21,10 +21,9 @@ pipeline {
                     echo "${env.SERVICE_NAME}"
                     echo "${env.SERVICE_IP}"
                     echo "${env.SERVICE_PORT}"
-                  }
-                  sh 'env'
-                  sh "ansible-playbook save_inputs.yml -vvvvv"
                 }
+                sh 'env'
+                sh "ansible-playbook save_inputs.yml -vvvvv"
             }
         }
         stage('Check if change is needed') {
@@ -37,7 +36,6 @@ pipeline {
                 sh "ansible-playbook get_path.yml -vvvvv"
                 echo "Check if routing and policies are already in place for the given path"
                 sh "ansible-playbook is_change_needed.yml -vvvvv"
-//                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
         stage('Verify change in Sandbox') {
@@ -86,7 +84,6 @@ pipeline {
                         sh "ssh root@10.128.2.244 'ansible-playbook rollback_changes.yml -vvvvv'"
                     }
                 }
-//                echo "currentBuild.currentResult: ${currentBuild.currentResult}"
             }
         }
     }
