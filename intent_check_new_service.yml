@@ -9,8 +9,8 @@
   vars:
     expected_check_status: PASS  # Default status
     # Read service ip and port from local file
-    service_ip: "{{lookup('file', './tmp/service_ip')}}"
-    service_port:  "{{lookup('file', './tmp/service_port')}}"
+    service_ip: "{{lookup('file', '{{WORKSPACE}}/tmp/service_ip')}}"
+    service_port:  "{{lookup('file', '{{WORKSPACE}}/tmp/service_port')}}"
 
   tasks:
     - name: Ensure a check matching new service intent is present

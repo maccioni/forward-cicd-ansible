@@ -16,7 +16,7 @@
         network_name: "{{ network_name }}"
 #        wait_time: 120
         type: collect
-        devices: "{{lookup('file', './tmp/firewall_name')}}"
+        devices: "{{lookup('file', '{{WORKSPACE}}/tmp/firewall_name')}}"
       register: collection_output
 
     - name: Print snapshot link
