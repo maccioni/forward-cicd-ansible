@@ -12,7 +12,7 @@ pipeline {
                         parameters: [
                             string(defaultValue: 'NFD', description: 'Service Name', name: 'name'),
                             string(defaultValue: '10.1.102.5', description: 'Service IP', name: 'ip'),
-                            string(defaultValue: '443', description: 'Service port', name: 'port')
+                            string(defaultValue: '443', description: 'Service port', name: 'port'),
                             string(defaultValue: '10.4.125.0/24', description: 'Client Network', name: 'clients')
                             ]
                   }
