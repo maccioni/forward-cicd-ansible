@@ -7,19 +7,21 @@ pipeline {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
                 timeout(time: 60, unit: 'SECONDS') {
-                  script {
-                    def user_inputs = input message: 'User input required', ok: 'Enter',
-                        parameters: [
-                            string(defaultValue: 'NFD', description: 'Service Name', name: 'name'),
-                            string(defaultValue: '10.1.102.5', description: 'Service IP', name: 'ip'),
-                            string(defaultValue: '443', description: 'Service port', name: 'port'),
-                            string(defaultValue: '10.4.125.0/24', description: 'Client Network', name: 'clients')
+                    script {
+                        def user_inputs = input message: 'User input required', ok: 'Enter',
+                            parameters: [
+                               string(defaultValue: '', description: 'Service Name', name: 'name'),
+                               string(defaultValue: '', description: 'Service IP', name: 'ip'),
+                               string(defaultValue: '', description: 'Service port', name: 'port')
                             ]
+                    }
+                    env.SERVICE_NAME = user_inputs.name
+                    env.SERVICE_IP = user_inputs.ip
+                    env.SERVICE_PORT = user_inputs.port
+                    echo "${env.SERVICE_NAME}"
+                    echo "${env.SERVICE_IP}"
+                    echo "${env.SERVICE_PORT}"
                   }
-                  env.SERVICE_NAME = user_inputs.name
-                  env.SERVICE_IP = user_inputs.ip
-                  env.SERVICE_PORT = user_inputs.port
-                  env.CLIENTS = user_inputs.clients
                   sh 'env'
                   sh "ansible-playbook save_inputs.yml -vvvvv"
                 }
