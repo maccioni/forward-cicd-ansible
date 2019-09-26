@@ -16,11 +16,14 @@ pipeline {
                             parameters: [string(defaultValue: '', description: 'Service Name', name: 'name')]
                         env.SERVICE_IP = input message: 'User input required', ok: 'Enter!',
                             parameters: [ string(defaultValue: '', description: 'Service IP', name: 'ip') ]
-                        env.SERVICE_PORT = input message: 'User input required', ok: 'Enter!',
-                            parameters: [ string(defaultValue: '', description: 'Service port', name: 'port') ]                    }
+                        env.SERVICE_IP = input message: 'User input required', ok: 'Enter!',
+                            parameters: [ string(defaultValue: '', description: 'Service IP', name: 'ip') ]
+                        env.CLIENTS = input message: 'User input required', ok: 'Enter!',
+                            parameters: [ string(defaultValue: '', description: 'Client Network', name: 'clients') ]                    }
                     echo "${env.SERVICE_NAME}"
                     echo "${env.SERVICE_IP}"
                     echo "${env.SERVICE_PORT}"
+                    echo "${env.CLIENTS}"
                 }
             }
         }
