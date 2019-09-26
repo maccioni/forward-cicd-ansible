@@ -8,10 +8,10 @@
   vars:
     # Read firewall_ip from file created by is_change_needed Python script
     # The tasks will be executed only on this firewall
-    firewall_ip:  "{{lookup('file', './tmp/firewall_ip')}}"
-    service_name: "{{lookup('file', './tmp/service_name')}}"
-    service_ip:   "{{lookup('file', './tmp/service_ip')}}"
-    service_port: "{{lookup('file', './tmp/service_port')}}"
+    firewall_ip:  "{{lookup('file', 'firewall_ip')}}"
+    service_name: "{{lookup('file', 'service_name')}}"
+    service_ip:   "{{lookup('file', 'service_ip')}}"
+    service_port: "{{lookup('file', 'service_port')}}"
 
   # I have no found a way to configure a jump host for panos devices.
   # This playbook is copied and run in the remote server by Jenkins
