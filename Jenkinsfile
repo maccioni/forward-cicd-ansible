@@ -4,9 +4,6 @@ pipeline {
     stages {
         stage('Download code from GitHub') {
             steps {
-                echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
-                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
-                timeout(time: 60, unit: 'SECONDS') {
                     script {
                         def user_inputs = input message: 'User input required', ok: 'Enter',
                             parameters: [
@@ -22,6 +19,9 @@ pipeline {
                     echo "${env.SERVICE_IP}"
                     echo "${env.SERVICE_PORT}"
                 }
+                echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
+                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
+                timeout(time: 60, unit: 'SECONDS') {
                 sh 'env'
                 sh "ansible-playbook save_inputs.yml -vvvvv"
             }
