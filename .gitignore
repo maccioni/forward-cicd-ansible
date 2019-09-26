@@ -1,11 +1,9 @@
 # Byte-compiled / optimized / DLL files
 
 forward.properties
-test.yml
-*.json
-*.output
 *.retry
-firewall*
+configs/*
+tmp/*
 
 __pycache__/
 *.py[cod]

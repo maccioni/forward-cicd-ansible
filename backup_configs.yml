@@ -1,7 +1,7 @@
 ---
 
 - name: Backup Cisco devices
-  hosts: eve_ios
+  hosts: ios
   gather_facts: no
 
   tasks:
@@ -16,7 +16,7 @@
         dest: "configs/{{ inventory_hostname }}.txt"
 
 - name: Backup Juniper devices
-  hosts: eve_junos
+  hosts: junos
   gather_facts: no
 
   tasks:
@@ -30,7 +30,7 @@
         dest: "configs/{{ inventory_hostname }}.txt"
 
 - name: Backup F5 devices
-  hosts: eve_f5
+  hosts: f5
   gather_facts: no
 
   tasks:
@@ -49,7 +49,7 @@
         dest: "configs/{{ inventory_hostname }}.txt"
 
 - name: Backup Panos devices
-  hosts: eve_panos
+  hosts: panos
   gather_facts: no
 
   tasks:

@@ -1,0 +1,27 @@
+- name: Save user inputs from Jenkins pipeline to local file
+
+#
+# Save user inputs from environment variable created by Jenkins into file
+# in the tmp directory
+#
+
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+
+    - copy:
+        content: "{{ lookup('env','SERVICE_NAME') }}"
+        dest: "./tmp/service_name"
+
+    - copy:
+        content: "{{ lookup('env','SERVICE_IP') }}"
+        dest: "./tmp/service_ip"
+
+    - copy:
+        content: "{{ lookup('env','SERVICE_PORT') }}"
+        dest: "./tmp/service_port"
+
+    - copy:
+        content: "{{ lookup('env','CLIENTS') }}"
+        dest: "./tmp/clients"

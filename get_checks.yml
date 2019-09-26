@@ -9,7 +9,7 @@
   tasks:
     - name: GET all the Forward Checks using the Forward Checks REST API
       uri:
-        url: "{{url}}/api/snapshots/{{lookup('file', 'new_snapshot_id')}}/checks"
+        url: "{{url}}/api/snapshots/{{lookup('file', './tmp/new_snapshot_id')}}/checks"
         method: GET
         force_basic_auth: yes
         user: "{{ username }}"
@@ -27,4 +27,4 @@
     - name: Save json output to file
       copy:
         content: "{{ checks_output.json }}"
-        dest: "checks.json"
+        dest: "./tmp/checks.json"

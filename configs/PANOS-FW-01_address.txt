@@ -1,5 +1,5 @@
-      address {
-        "Arrodugo server" {
-          ip-netmask 10.1.102.5/32;
-          description "Arrodugo server object";
-        }
+          address {
+            "Arrodugo server" {
+              ip-netmask 10.1.102.5/32;
+              description "Arrodugo server object";
+            }

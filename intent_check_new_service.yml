@@ -8,6 +8,9 @@
 
   vars:
     expected_check_status: PASS  # Default status
+    # Read service ip and port from local file
+    sercice_ip: "{{lookup('file', './tmp/service_ip')}}"
+    service_port:  "{{lookup('file', './tmp/service_port')}}"
 
   tasks:
     - name: Ensure a check matching new service intent is present
@@ -21,8 +24,8 @@
         network_name: "{{network_name}}"
         data:
           source_host: "{{src_ip}}"
-          ipv4_dst: "{{server_ip}}"
-          tp_dst: "{{dst_port}}"
+          ipv4_dst: "{{service_ip}}"
+          tp_dst: "{{service_port}}"
       register: check_output
 #      failed_when: check_output.result.status != expected_check_status
 

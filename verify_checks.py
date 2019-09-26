@@ -5,7 +5,7 @@ import sys
 
 # Open the checks.json that contains the Checks API json output
 try:
-  f = open("checks.json", "r")
+  f = open("./tmp/checks.json", "r")
   if f.mode == 'r':
       file_str = f.read()
 except:

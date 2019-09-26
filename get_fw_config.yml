@@ -1,0 +1,23 @@
+- name: GET Firewall config file from the Forward Platform and save it to a file
+
+  hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - /var/lib/jenkins/forward.properties
+
+  vars:
+    # Read Firewall name from file
+    fw_name: "{{lookup('file', './tmp/firewall_name')}}"
+    # Filename used in the enpoint to get the config
+    url_fw_name: "{{fw_name}},configuration,16.txt"
+    # Config file name
+    config_file_name: "{{fw_name}}.txt"
+
+  tasks:
+
+    # Get the firewall config from the Forwardf platform and save it
+    # to a local file ####
+    - name: Get Firewall Config File
+      shell: 'curl  -X "GET" "{{url}}/api/snapshots/{{snapshot_id}}/files/{{url_fw_name}}" -u {{ username }}:{{ password }}  -k > {{config_file_name}}'
+      register: save_output

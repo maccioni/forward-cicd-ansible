@@ -8,20 +8,6 @@
 
   tasks:
 
-      ###### STEP 1: Start a Partial Collection ######
-#    - name: Start Partial Collection
-#      uri:
-#        url: "{{url}}/api/networks/{{network_id}}/startcollection"
-#        method: POST
-#        force_basic_auth: yes
-#        user: "{{ username }}"
-#        password: "{{ password }}"
-#        body_format: json
-#        body:
-#          devices: ["PANOS*"]
-#        return_content: yes
-#      register: collection_output
-
     - name: Take a new partial collection
       forward_snapshot:
         url: "{{url}}"
@@ -30,7 +16,7 @@
         network_name: "{{ network_name }}"
 #        wait_time: 120
         type: collect
-        devices: "{{lookup('file', 'firewall_name')}}"
+        devices: "{{lookup('file', './tmp/firewall_name')}}"
       register: collection_output
 
     - name: Print snapshot link
@@ -94,7 +80,7 @@
     - name: Save partial collection snapshot id to a local file
       copy:
         content: "{{ snapshots_output.json.snapshots[0].id }}"
-        dest: "new_snapshot_id"
+        dest: "./tmp/new_snapshot_id"
 
     - name: Make sure the collection is over by checking the latestProcessed id
       uri:

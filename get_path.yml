@@ -7,14 +7,15 @@
     - /var/lib/jenkins/forward.properties
 
   vars:
-    # Define the default expected security and forwarding outcome status
-    expected_security_outcome_status: DENIED      # options: PERMITTED, DENIED
-    expected_forwarding_outcome_status: DELIVERED # options: DELIVERED, DELIVERED_TO_INCORRECT_LOCATION, BLACKHOLE, DROPPED, INADMISSIBLE, UNREACHABLE, LOOP
+    # Read service ip and port from local file
+    service_ip:    "{{lookup('file', './tmp/service_ip')}}"
+    service_port:  "{{lookup('file', './tmp/service_port')}}"
+    clients:       "{{lookup('file', './tmp/clients')}}"
 
   tasks:
     - name: get best path using the Forward Paths REST API
       uri:
-        url: "{{url}}/api/snapshots/{{snapshot_id}}/paths?srcIp={{src_ip}}&dstIp={{server_ip}}&dstPort={{dst_port}}"
+        url: "{{url}}/api/snapshots/{{snapshot_id}}/paths?srcIp={{clients}}&dstIp={{service_ip}}&dstPort={{service_port}}"
         method: GET
         force_basic_auth: yes
         user: "{{ username }}"
@@ -34,4 +35,4 @@
     - name: Save json output to file
       copy:
         content: "{{ paths_output.json }}"
-        dest: "paths.json"
+        dest: "./tmp/paths.json"

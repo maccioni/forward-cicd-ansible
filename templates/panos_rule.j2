@@ -1,18 +1,18 @@
             rules {
-              "Allow Arrodugo service" {
+              "Allow {{ service_name }} service" {
                 from any;
                 to any;
-                source any;
+                source clients;
                 source-user any;
                 hip-profiles any;
-                destination "Arrodugo server";
+                destination "{{ service_name }} server";
                 application any;
                 service application-default;
                 category any;
                 action allow;
                log-start no;
                log-end yes;
-               description "permit access to Arrodugo service";
+               description "permit access to {{ service_name }} service";
                rule-type universal;
                negate-source no;
                negate-destination no;

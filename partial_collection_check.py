@@ -7,7 +7,7 @@ import sys
 #    "busyStatus": "IDLE",
 # Open the checks.json that contains the Checks API json output
 try:
-  f = open("collection.json", "r")
+  f = open("./tmp/collection.json", "r")
   if f.mode == 'r':
       file_str = f.read()
 except:

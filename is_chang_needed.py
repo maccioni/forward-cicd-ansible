@@ -34,7 +34,7 @@ def get_device_ip(device_name):
 
 # Open the paths.json that contains the Path API json output
 try:
-  f = open("paths.json", "r")
+  f = open("./tmp/paths.json", "r")
   if f.mode == 'r':
       file_str = f.read()
 except:
@@ -64,12 +64,12 @@ elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "PERMIT
 
 elif path_forwarding_outcome == "DELIVERED" and path_security_outcome == "DENIED":
     print("The forwarding is OK but the security rules need to be changed on these devices: ")
-    f_ip = open("firewall_ip","w+")
-    f_name = open("firewall_name","w+")
+    f_ip = open("./tmp/firewall_ip","w+")
+    f_name = open("./tmp/firewall_name","w+")
     for hop in best_path['hops']:
         for behavior in hop['behaviors']:
             if behavior == "ACL_DENY":
-                
+
                 # Save device name into file to be used to save the device's
                 # config file to the Sandbox
                 print(hop['deviceName'])

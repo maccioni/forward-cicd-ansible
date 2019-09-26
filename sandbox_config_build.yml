@@ -1,0 +1,43 @@
+- name: Build FW config to be tested in the Forward Sandbox
+
+# The FW configuration to be tested in the sandbox is built at runtime by
+# 1) downloading the current FW config file from the Forward Paltform
+# 2) building the FW security rule and address object configuration snipets
+#    using Ansible Jinja 2 templates
+# 3) adding the configuration snipets to the current config using a Python script
+
+  hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - /var/lib/jenkins/forward.properties
+
+  vars:
+    # Read Firewall name from file created by the is_change_needed playbook
+    fw_name: "{{lookup('file', './tmp/firewall_name')}}"
+    # Filename used in the enpoint to get the config from the Forward platform
+    url_fw_name: "{{fw_name}},configuration,16.txt"
+    # Config file name used to upload the new config to the Forward Sandbox
+    config_file_name: "{{fw_name}}.txt"
+
+  tasks:
+
+    # Get the firewall config from the Forward platform and save it to a file
+    # in the local directory
+    - name: Get Firewall Config File
+      shell: 'curl  -X "GET" "{{url}}/api/snapshots/{{snapshot_id}}/files/{{url_fw_name}}" -u {{ username }}:{{ password }}  -k > ./tmp/{{config_file_name}}'
+      register: save_output
+
+    # Create new FW service object config snipet in the configs directory
+    - template:
+        src=templates/panos_address.j2
+        dest=configs/{{ fw_name }}_address.txt
+
+    # Create new FW security rule config snipet in the configs directory
+    - template:
+        src=templates/panos_rule.j2
+        dest=configs/{{ fw_name }}_rule.txt
+
+    # Run Python script to add the config snipets to the original fw config
+    - name: Add the config snipets to the original fw config
+      shell: 'python sandbox_config_build.py {{ fw_name }}'

@@ -1,11 +1,11 @@
-- name: Verify changes in the Forward Enterprise Sandox
+- name: Save changes in the Forward Enterprise Sandox
 
   hosts: localhost
   gather_facts: no
 
   vars:
     # Read firewall_name from file created by is_change_needed Python script
-    firewall_name: "{{lookup('file', 'firewall_name')}}"
+    firewall_name: "{{lookup('file', './tmp/firewall_name')}}"
 
   vars_files:
     - /var/lib/jenkins/forward.properties
@@ -60,4 +60,4 @@
     - name: Save predict snapshot id to a local file
       copy:
         content: "{{ commit_output.json.id }}"
-        dest: "new_snapshot_id"
+        dest: "./tmp/new_snapshot_id"
