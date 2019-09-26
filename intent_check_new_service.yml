@@ -9,7 +9,7 @@
   vars:
     expected_check_status: PASS  # Default status
     # Read service ip and port from local file
-    sercice_ip: "{{lookup('file', './tmp/service_ip')}}"
+    service_ip: "{{lookup('file', './tmp/service_ip')}}"
     service_port:  "{{lookup('file', './tmp/service_port')}}"
 
   tasks:
