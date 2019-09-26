@@ -10,16 +10,16 @@ pipeline {
         }
         stage("Gather Deployment Parameters") {
             steps {
-                timeout(time: 30, unit: 'SECONDS') {
+                timeout(time: 120, unit: 'SECONDS') {
                     script {
                         env.SERVICE_NAME = input message: 'User input required', ok: 'Enter',
                             parameters: [string(defaultValue: '', description: 'Service Name', name: 'name')]
                         env.SERVICE_IP = input message: 'User input required', ok: 'Enter!',
-                            parameters: [ string(defaultValue: '', description: 'Service IP', name: 'ip') ]
-                        env.SERVICE_IP = input message: 'User input required', ok: 'Enter!',
-                            parameters: [ string(defaultValue: '', description: 'Service IP', name: 'ip') ]
+                            parameters: [ string(defaultValue: '10.1.102.5', description: 'Service IP', name: 'ip') ]
+                        env.SERVICE_PORT = input message: 'User input required', ok: 'Enter!',
+                            parameters: [ string(defaultValue: '443', description: 'Service port', name: 'port') ]
                         env.CLIENTS = input message: 'User input required', ok: 'Enter!',
-                            parameters: [ string(defaultValue: '', description: 'Client Network', name: 'clients') ]                    }
+                            parameters: [ string(defaultValue: '10.4.125.0/24', description: 'Client Network', name: 'clients') ]                    }
                     echo "${env.SERVICE_NAME}"
                     echo "${env.SERVICE_IP}"
                     echo "${env.SERVICE_PORT}"
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
-                timeout(time: 60, unit: 'SECONDS') {
+                timeout(time: 120, unit: 'SECONDS') {
                 sh 'env'
                 sh "ansible-playbook save_inputs.yml -vvvvv"
                 }
