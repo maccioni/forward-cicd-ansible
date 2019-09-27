@@ -6,7 +6,6 @@ pipeline {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
                 slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
-                sh "ansible-playbook save_inputs.yml -vvvvv"
                 timeout(time: 120, unit: 'SECONDS') {
                     script {
                         env.SERVICE_NAME = input message: 'User input required', ok: 'Enter',
@@ -18,10 +17,9 @@ pipeline {
                         env.CLIENTS = input message: 'User input required', ok: 'Enter!',
                             parameters: [ string(defaultValue: '10.4.125.0/24', description: 'Client Network', name: 'clients') ]
                     }
-                    echo "${env.SERVICE_NAME}"
-                    echo "${env.SERVICE_IP}"
-                    echo "${env.SERVICE_PORT}"
-                    echo "${env.CLIENTS}"
+                    // Save user inputs to files in the tmp directory to be used at later stages
+                    sh "ansible-playbook save_inputs.yml -vvvvv"
+                    echo "Service name: ${env.SERVICE_NAME} Service IP: ${env.SERVICE_IP} Service port: ${env.SERVICE_PORT} Clients Network: ${env.CLIENTS}"
                 }
             }
         }
