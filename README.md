@@ -34,7 +34,7 @@ The framework is based on common practices like:
 
 The pictures below shows the entire process:
 
-![Jenkins](images/Jenkins_pipeline.png?width=800px&classes=shadow)
+![Jenkins](images/jenkins_pipeline.png?width=800px&classes=shadow)
 
 The entire workflow, called pipeline in Jenkins, is split in several stages, each consisting of several steps:
 
