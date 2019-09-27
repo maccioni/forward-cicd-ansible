@@ -6,11 +6,6 @@
   vars_files:
     - /var/lib/jenkins/forward.properties
 
-  # playbooks that include forward modules are not run in the Jenkins WORKSPACE
-  # because are installed locally
-  vars:
-    - fw_name_path: "{{lookup('env','WORKSPACE')}}/tmp"
-
   tasks:
 
     - name: Take a new partial collection
@@ -21,7 +16,7 @@
         network_name: "{{ network_name }}"
 #        wait_time: 120
         type: collect
-        devices: "{{lookup('file', '{{ fw_name_path }}/firewall_name')}}"
+        devices: "{{lookup('file', 'firewall_name')}}"
       register: collection_output
 
     - name: Print snapshot link
