@@ -2,14 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Initial Stage') {
-          steps {
-              echo "Check enviroment "
-              sh "env"
-            }
-        }
-        stage("Gather Deployment Parameters") {
+        stage('Download code from GitHub and gather user inputs') {
             steps {
+                echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
+                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
+                sh "ansible-playbook save_inputs.yml -vvvvv"
                 timeout(time: 120, unit: 'SECONDS') {
                     script {
                         env.SERVICE_NAME = input message: 'User input required', ok: 'Enter',
@@ -19,7 +16,8 @@ pipeline {
                         env.SERVICE_PORT = input message: 'User input required', ok: 'Enter!',
                             parameters: [ string(defaultValue: '443', description: 'Service port', name: 'port') ]
                         env.CLIENTS = input message: 'User input required', ok: 'Enter!',
-                            parameters: [ string(defaultValue: '10.4.125.0/24', description: 'Client Network', name: 'clients') ]                    }
+                            parameters: [ string(defaultValue: '10.4.125.0/24', description: 'Client Network', name: 'clients') ]
+                    }
                     echo "${env.SERVICE_NAME}"
                     echo "${env.SERVICE_IP}"
                     echo "${env.SERVICE_PORT}"
@@ -27,22 +25,9 @@ pipeline {
                 }
             }
         }
-        stage('Download code from GitHub') {
-            steps {
-                echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
-                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
-                timeout(time: 120, unit: 'SECONDS') {
-                sh 'env'
-                sh "ansible-playbook save_inputs.yml -vvvvv"
-                }
-            }
-        }
         stage('Check if change is needed') {
             steps {
-                echo "${env.SERVICE_NAME}"
-                echo "${env.SERVICE_IP}"
-                echo "${env.SERVICE_PORT}"
-                echo "${env.CLIENTS}"
+                sh 'env'
                 echo "Get Path info using Ansible URI module"
                 sh "ansible-playbook get_path.yml -vvvvv"
                 echo "Check if routing and policies are already in place for the given path"
