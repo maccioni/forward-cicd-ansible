@@ -12,8 +12,9 @@
     expected_check_status: PASS  # Default status
     fw_name_path: "{{lookup('env','WORKSPACE')}}/tmp"
     # Read service ip and port from local file
-    service_ip: "{{lookup('file', '{{fw_name_path}}/service_ip')}}"
-    service_port:  "{{lookup('file', '{{fw_name_path}}/service_port')}}"
+    service_ip:   "{{lookup('file', '{{fw_name_path}}/service_ip')}}"
+    service_port: "{{lookup('file', '{{fw_name_path}}/service_port')}}"
+    clients:      "{{lookup('file', '{{fw_name_path}}/clients')}}"
 
   tasks:
     - name: Ensure a check matching new service intent is present
@@ -26,7 +27,7 @@
         type: "typical_5_tuple"
         network_name: "{{network_name}}"
         data:
-          source_host: "{{src_ip}}"
+          source_host: "{{clients}}"
           ipv4_dst: "{{service_ip}}"
           tp_dst: "{{service_port}}"
       register: check_output
