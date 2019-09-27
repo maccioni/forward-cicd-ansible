@@ -30,7 +30,7 @@
         username: '{{ panos_user }}'
         password: '{{ panos_password }}'
         name: '{{ service_name }} server'
-        value: '{{ server_ip }}/32'
+        value: '{{ service_ip }}/32'
         description: '{{ service_name }} server object'
         state: 'present'
       when: inventory_hostname == "{{ firewall_ip }}"
