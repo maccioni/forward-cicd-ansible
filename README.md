@@ -1,7 +1,7 @@
 # close loop automation workflow based on Red Hat Ansible and Forward Enterprise
-| DISCLAIMER: All the code in this repository is distributed with no warranty and
-no support from Forward Networks |
-| --- |
+<div class="notices note" ><p>DISCLAIMER: All the code in this repository is distributed with no warranty and
+no support from Forward Networks</p>
+</div>
 
 This repository includes all the code used to demo a close loop automation
 workflow based on Red Hat Ansible and Forward Enterprise.
@@ -98,9 +98,10 @@ The entire workflow, called pipeline in Jenkins, is split in several stages, eac
  2. A Network environment that includes a Palo Alto Network firewall in between
     the server running the new service and the clients
 
-| If you have a different firewall then a Palo Alto Network in your setup, you
-need to modify the Jinja2 templates for the given firewall platform. |
-| --- |
+<div class="notices note" ><p>If you have a different firewall then a Palo Alto
+Network in your setup, you need to modify the Jinja2 templates for the given
+firewall platform.</p>
+</div>
 
 # Demo setup
 
