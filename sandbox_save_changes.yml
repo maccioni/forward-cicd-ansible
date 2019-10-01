@@ -5,7 +5,8 @@
 
   vars:
     # Read firewall_name from file created by is_change_needed Python script
-    firewall_name: "{{lookup('file', './tmp/firewall_name')}}"
+    firewall_name:  "{{lookup('file', './tmp/firewall_name')}}"
+    fw_config_path: "{{lookup('env','WORKSPACE')}}/tmp/{{ firewall_name }}_config.txt"
 
   vars_files:
     - /var/lib/jenkins/forward.properties
@@ -33,7 +34,7 @@
 
     #### Step 2: Save changes into Sanbox by uploading the new device config ####
     - name: Save changes into Sandox
-      shell: 'curl  -X "POST" "{{url}}/api/snapshots/{{fork_output.json.id}}/files" -u {{ username }}:{{ password }} -F "file=@/var/lib/jenkins/{{ firewall_name }}_config.txt"  -k'
+      shell: 'curl  -X "POST" "{{url}}/api/snapshots/{{fork_output.json.id}}/files" -u {{ username }}:{{ password }} -F "file=@{{ fw_config_path }}"  -k'
       register: save_output
 
     #### Step 3: Commit change to Sandbox  ####
