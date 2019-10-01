@@ -6,7 +6,7 @@
   vars:
     # Read firewall_name from file created by is_change_needed Python script
     firewall_name:  "{{lookup('file', './tmp/firewall_name')}}"
-    fw_config_path: "{{lookup('env','WORKSPACE')}}/tmp/{{ firewall_name }}_config.txt"
+    fw_config_path: "{{lookup('env','WORKSPACE')}}/configs/{{ firewall_name }}_config.txt"
 
   vars_files:
     - /var/lib/jenkins/forward.properties
