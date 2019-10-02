@@ -5,7 +5,6 @@ pipeline {
         stage('Download code from GitHub and gather user inputs') {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
-                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'nfd-fwd', channel: 'cicd-service-deployment')
                 timeout(time: 120, unit: 'SECONDS') {
                     script {
                         env.SERVICE_NAME = input message: 'Provide Service Name', ok: 'Enter',
@@ -20,6 +19,7 @@ pipeline {
                     // Save user inputs to files in the tmp directory to be used at later stages
                     sh "ansible-playbook save_inputs.yml -vvvvv"
                     echo "Service name: ${env.SERVICE_NAME} Service IP: ${env.SERVICE_IP} Service port: ${env.SERVICE_PORT} Clients Network: ${env.CLIENTS}"
+                    slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'nfd-fwd', channel: 'cicd-service-deployment')
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline {
                 // Copy and run the playbook from fwd-ansible directory to use
                 // the new Forward Ansible modules
                 sh "cp intent_check_new_service.yml /var/lib/jenkins/fwd-ansible"
-                sh "ansible-playbook /var/lib/jenkins/fwd-ansible/intent_check_new_service.yml -vvvvv"
+                //sh "ansible-playbook /var/lib/jenkins/fwd-ansible/intent_check_new_service.yml -vvvvv"
                 echo "Get all Checks from Forward Platform using Ansible URI module"
                 sh "ansible-playbook get_checks.yml -vvvvv"
                 script {
