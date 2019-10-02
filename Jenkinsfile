@@ -5,7 +5,7 @@ pipeline {
         stage('Download code from GitHub and gather user inputs') {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
-                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
+                slackSend (message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})",  username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'nfd-fwd', channel: 'cicd-service-deployment')
                 timeout(time: 120, unit: 'SECONDS') {
                     script {
                         env.SERVICE_NAME = input message: 'Provide Service Name', ok: 'Enter',
@@ -14,8 +14,8 @@ pipeline {
                             parameters: [ string(defaultValue: '', description: 'Service IP', name: 'ip') ]
                         env.SERVICE_PORT = input message: 'Provide Service port', ok: 'Enter!',
                             parameters: [ string(defaultValue: '', description: 'Service port', name: 'port') ]
-                        env.CLIENTS = input message: 'User input required', ok: 'Enter!',
-                            parameters: [ string(defaultValue: '', description: 'Client Network', name: 'clients') ]
+                        env.CLIENTS = input message: 'Provide Users Network', ok: 'Enter!',
+                            parameters: [ string(defaultValue: '', description: 'Users Network', name: 'clients') ]
                     }
                     // Save user inputs to files in the tmp directory to be used at later stages
                     sh "ansible-playbook save_inputs.yml -vvvvv"
@@ -88,14 +88,14 @@ pipeline {
         }
         success {
             echo "(Post success) Pipeline executed successfully!"
-            slackSend (message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})", color: '#00FF00', username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
+            slackSend (message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})", color: '#00FF00', username: 'fabriziomaccioni', teamDomain: 'nfd-fwd', channel: 'cicd-service-deployment')
         }
         unstable {
             echo "(Post unstable) Pipeline is unstable :/"
         }
         failure {
             echo "(Post failure) Pipeline Failed!!!"
-            slackSend (message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})", color: '#FF0000', username: 'fabriziomaccioni', token: "${env.SLACK_TOKEN}", teamDomain: 'fwd-net', channel: 'demo-notifications')
+            slackSend (message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.JENKINS_URL}/blue/organizations/jenkins/forward-cicd-ansible/detail/master/${env.BUILD_NUMBER})", color: '#FF0000', username: 'fabriziomaccioni', teamDomain: 'nfd-fwd', channel: 'cicd-service-deployment')
         }
         changed {
             echo "(Post failure) Something changed..."
