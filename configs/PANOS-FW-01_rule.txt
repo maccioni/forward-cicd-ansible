@@ -1,18 +1,18 @@
             rules {
-              "Allow Arrodugo service" {
+              "Allow NFD service" {
                 from any;
                 to any;
                 source any;
                 source-user any;
                 hip-profiles any;
-                destination "Arrodugo server";
+                destination "NFD server";
                 application any;
                 service application-default;
                 category any;
                 action allow;
                log-start no;
                log-end yes;
-               description "permit access to Arrodugo service";
+               description "permit access to NFD service";
                rule-type universal;
                negate-source no;
                negate-destination no;
