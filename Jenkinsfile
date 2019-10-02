@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Download code from GitHub and gather user inputs') {
+        stage('Gather user inputs') {
             steps {
                 echo "Downloaded code from https://github.com/maccioni/forward-cicd-ansible"
                 timeout(time: 120, unit: 'SECONDS') {
